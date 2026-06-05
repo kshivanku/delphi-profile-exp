@@ -11,6 +11,13 @@ const starterSource = document.querySelector("[data-starter-source]");
 const starterTitle = document.querySelector("[data-starter-title]");
 const starterLink = document.querySelector("[data-starter-link]");
 const starterRows = document.querySelector("[data-starter-rows]");
+const profileModalButtons = document.querySelectorAll("[data-profile-modal]");
+const profileDialog = document.querySelector("[data-profile-dialog]");
+const profileModalTitle = document.querySelector("[data-modal-title]");
+const profileModalKicker = document.querySelector("[data-modal-kicker]");
+const profileModalBody = document.querySelector("[data-modal-body]");
+const profileModalFollowTitle = document.querySelector("[data-modal-follow-title]");
+const profileModalCloseButtons = document.querySelectorAll(".modal-close, .modal-backdrop");
 
 const variants = {
   current: {
@@ -81,6 +88,27 @@ const signalDetails = {
   },
 };
 
+const profileDescriptions = {
+  john: {
+    kicker: "About John",
+    title: "John Zimmer",
+    paragraphs: [
+      "John is the co-founder of Yes& and the former co-founder and President of Lyft.",
+      "At Yes&, he is building companies around the idea that business can create positive impact at scale. Before that, he helped turn Lyft into one of the defining transportation platforms of the last decade.",
+      "He has also appeared on The Library of Minds podcast, and his Delphi is especially useful for questions about cities, transportation, startup leadership, and mission-led company building.",
+    ],
+  },
+  ben: {
+    kicker: "About Ben",
+    title: "Ben Greenfield",
+    paragraphs: [
+      "Ben is the founder of Ben Greenfield Life, a health consultant, speaker, and New York Times bestselling author across fitness, nutrition, parenting, cooking, endurance, and spiritual wellness.",
+      "His background spans collegiate sports, bodybuilding, Ironman triathlons, obstacle course racing, and personal training recognition from major health and fitness organizations.",
+      "His Delphi is useful for questions about functional exercise, nutrition, gut health, supplementation, performance, recovery, and finding a healthier balance between ambition and wellbeing.",
+    ],
+  },
+};
+
 let currentVariant = "current";
 let activeSuggestion = variants.current.placeholders[0];
 let placeholderIndex = 0;
@@ -136,6 +164,22 @@ signalCards.forEach((button) => {
   button.addEventListener("click", () => {
     toggleStarterCard(button.dataset.signal);
   });
+});
+
+profileModalButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    openProfileModal(button.dataset.profileModal);
+  });
+});
+
+profileModalCloseButtons.forEach((button) => {
+  button.addEventListener("click", closeProfileModal);
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !profileDialog.hidden) {
+    closeProfileModal();
+  }
 });
 
 function fitTextarea() {
@@ -315,6 +359,33 @@ function typePlaceholder(suggestion) {
 
 function stopPlaceholderTyping() {
   window.clearInterval(placeholderTypingTimer);
+}
+
+function openProfileModal(profile) {
+  const description = profileDescriptions[profile];
+
+  if (!description) {
+    return;
+  }
+
+  profileModalKicker.textContent = description.kicker;
+  profileModalTitle.textContent = description.title;
+  profileModalFollowTitle.textContent = `Follow ${description.title.split(" ")[0]} for more`;
+  profileModalBody.innerHTML = "";
+
+  description.paragraphs.forEach((paragraph) => {
+    const node = document.createElement("p");
+    node.textContent = paragraph;
+    profileModalBody.append(node);
+  });
+
+  profileDialog.hidden = false;
+  document.body.classList.add("modal-open");
+}
+
+function closeProfileModal() {
+  profileDialog.hidden = true;
+  document.body.classList.remove("modal-open");
 }
 
 function showPage(view) {

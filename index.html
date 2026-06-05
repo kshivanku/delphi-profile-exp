@@ -73,9 +73,9 @@
           </span>
         </button>
 
-        <button class="conversation-item" type="button">
+        <button class="conversation-item" type="button" data-nav-view="ben-profile">
           <span class="avatar-wrap">
-            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80" alt="" />
+            <img src="assets/BenGreen.jpg" alt="" />
             <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
           </span>
           <span class="conversation-copy">
@@ -87,7 +87,7 @@
           </span>
         </button>
 
-        <button class="conversation-item" type="button">
+        <button class="conversation-item" type="button" data-nav-view="emily-profile">
           <span class="avatar-wrap">
             <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80" alt="" />
             <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
@@ -272,6 +272,9 @@
             I’m John. Given your work in journalism and audience at The Atlantic,
             we could talk about how cities, stories, and mission-led companies
             earn public trust, or anything else on your mind.
+            <button class="read-more-link" type="button" data-profile-modal="john">
+              Read more about John
+            </button>
           </p>
         </div>
 
@@ -373,6 +376,149 @@
                   <path d="M12 19V5" />
                   <path d="m5 12 7-7 7 7" />
                 </svg>
+              </button>
+            </div>
+          </div>
+          <p class="fine-print">
+            By using this service, you agree to the <a href="#">Terms of Service</a>
+            and <a href="#">Privacy Policy</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="profile-card page-view" aria-labelledby="ben-profile-title" data-page-view="ben-profile">
+        <div class="profile-glow" aria-hidden="true"></div>
+        <div class="profile-shadow" aria-hidden="true"></div>
+
+        <div class="profile-image-wrap">
+          <img
+            class="profile-image"
+            src="assets/BenGreen.jpg"
+            alt="Ben Greenfield profile"
+          />
+          <span class="profile-badge" aria-hidden="true">
+            <svg viewBox="0 0 36 36">
+              <path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path>
+            </svg>
+          </span>
+        </div>
+
+        <div class="title-block">
+          <h1 id="ben-profile-title">Ben Greenfield</h1>
+          <div class="headline-row">
+            <p>Founder, Ben Greenfield Life</p>
+          </div>
+          <div class="profile-meta">
+            <span>96K Mind</span>
+            <span aria-hidden="true">·</span>
+            <span>Health consultant · Speaker · Author</span>
+            <span aria-hidden="true">·</span>
+            <span class="updated-at">Updated yesterday</span>
+          </div>
+        </div>
+
+        <div class="bio">
+          <p>
+            <span class="greeting-chip">
+              Hi
+              <img
+                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80"
+                alt=""
+              />
+              <strong>Maya,</strong>
+            </span>
+            I’m Ben. We could talk about gut health, performance, nutrition,
+            recovery, or how wellness ideas become practical for busy, high-output lives.
+            <button class="read-more-link" type="button" data-profile-modal="ben">
+              Read more about Ben
+            </button>
+          </p>
+        </div>
+
+        <div class="inline-composer static-composer" aria-label="Message Ben">
+          <textarea aria-label="Message Ben" rows="2" placeholder="Could you share some tips to unlock better gut health?"></textarea>
+          <span class="tab-hint" aria-hidden="true">TAB</span>
+          <div class="composer-actions">
+            <button class="add-button" type="button" aria-label="Attach file">
+              <img src="assets/icons/attach.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="composer-controls">
+              <button class="icon-button mic" type="button" aria-label="Record voice message">
+                <img src="assets/icons/mic.svg" alt="" aria-hidden="true" />
+              </button>
+              <button class="call-button" type="button" aria-label="Start call">
+                <img src="assets/icons/call.svg" alt="" aria-hidden="true" />
+                <span>Call</span>
+              </button>
+            </div>
+          </div>
+          <p class="fine-print">
+            By using this service, you agree to the <a href="#">Terms of Service</a>
+            and <a href="#">Privacy Policy</a>.
+          </p>
+        </div>
+      </section>
+
+      <section class="profile-card page-view" aria-labelledby="emily-profile-title" data-page-view="emily-profile">
+        <div class="profile-glow" aria-hidden="true"></div>
+        <div class="profile-shadow" aria-hidden="true"></div>
+
+        <div class="profile-image-wrap">
+          <img
+            class="profile-image"
+            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=320&q=80"
+            alt="Emily McDonald profile"
+          />
+          <span class="profile-badge" aria-hidden="true">
+            <svg viewBox="0 0 36 36">
+              <path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path>
+            </svg>
+          </span>
+        </div>
+
+        <div class="title-block">
+          <h1 id="emily-profile-title">Emily McDonald</h1>
+          <div class="headline-row">
+            <p>Audience strategy · Culture and storytelling</p>
+          </div>
+          <div class="profile-meta">
+            <span>6.7K Mind</span>
+            <span aria-hidden="true">·</span>
+            <span>7.1K conversations</span>
+            <span aria-hidden="true">·</span>
+            <span class="updated-at">Updated yesterday</span>
+          </div>
+        </div>
+
+        <div class="bio">
+          <p>
+            <span class="greeting-chip">
+              Hi
+              <img
+                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80"
+                alt=""
+              />
+              <strong>Maya,</strong>
+            </span>
+            I’m Emily. We could talk about audience trust, culture stories, and
+            how editorial ideas travel across platforms without losing their voice.
+          </p>
+        </div>
+
+        <div class="inline-composer static-composer" aria-label="Message Emily">
+          <textarea aria-label="Message Emily" rows="2" placeholder="How should audience teams think about trust?"></textarea>
+          <span class="tab-hint" aria-hidden="true">TAB</span>
+          <div class="composer-actions">
+            <button class="add-button" type="button" aria-label="Attach file">
+              <img src="assets/icons/attach.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="composer-controls">
+              <button class="icon-button mic" type="button" aria-label="Record voice message">
+                <img src="assets/icons/mic.svg" alt="" aria-hidden="true" />
+              </button>
+              <button class="call-button" type="button" aria-label="Start call">
+                <img src="assets/icons/call.svg" alt="" aria-hidden="true" />
+                <span>Call</span>
               </button>
             </div>
           </div>
@@ -497,6 +643,54 @@
 
       </section>
     </main>
+
+    <div class="profile-modal" data-profile-dialog hidden>
+      <button class="modal-backdrop" type="button" aria-label="Close profile details"></button>
+      <section
+        class="modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
+        <div class="modal-header">
+          <div>
+            <p data-modal-kicker>Profile</p>
+            <h2 id="modal-title" data-modal-title>John Zimmer</h2>
+          </div>
+          <button class="modal-close" type="button" aria-label="Close profile details">
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-body" data-modal-body></div>
+        <div class="modal-follow">
+          <h3 data-modal-follow-title>Follow John for more</h3>
+          <div class="modal-socials" aria-label="Social links">
+            <a href="#" aria-label="LinkedIn">
+              <span>in</span>
+            </a>
+            <a href="#" aria-label="X">
+              <span>X</span>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <span>◎</span>
+            </a>
+            <a href="#" aria-label="Substack">
+              <span>S</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <script src="script.js"></script>
   </body>
