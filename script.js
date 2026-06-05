@@ -4,7 +4,7 @@ const chatDock = document.querySelector(".chat-dock");
 const viewChatButton = document.querySelector(".view-chat");
 const viewChatLabel = document.querySelector(".view-chat-label");
 const historyList = document.querySelector(".history-list");
-const sendButton = document.querySelector(".send");
+const callButton = document.querySelector(".call-button");
 
 const chatHistory = [];
 
@@ -30,7 +30,23 @@ viewChatButton.addEventListener("click", () => {
   renderChatHistory();
 });
 
-sendButton.addEventListener("click", () => {
+textarea.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter" || event.shiftKey) {
+    return;
+  }
+
+  event.preventDefault();
+  addLocalMessage();
+});
+
+callButton.addEventListener("click", () => {
+  callButton.classList.toggle("active");
+  callButton.querySelector("span").textContent = callButton.classList.contains("active")
+    ? "Calling"
+    : "Call";
+});
+
+function addLocalMessage() {
   const text = textarea.value.trim();
 
   if (!text) {
@@ -44,7 +60,7 @@ sendButton.addEventListener("click", () => {
   if (chatDock.classList.contains("chat-open")) {
     renderChatHistory();
   }
-});
+}
 
 function renderChatHistory() {
   const hasHistory = chatHistory.length > 0;
