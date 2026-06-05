@@ -21,32 +21,228 @@
         </svg>
       </a>
 
-      <nav class="auth-actions" aria-label="Account actions">
-        <a class="button ghost" href="#">
-          <span class="icon" aria-hidden="true">↪</span>
-          <span>Sign In</span>
-        </a>
-        <a class="button dark desktop-only" href="#">
-          <span class="icon" aria-hidden="true">+</span>
-          <span>Create Your Delphi</span>
-        </a>
-      </nav>
     </header>
+
+    <div class="prototype-switcher" aria-label="Personalization prototype level">
+      <span class="switcher-label">Prototype</span>
+      <div class="switcher-options">
+        <button class="active" type="button" data-variant="current">Current intent</button>
+        <button type="button" data-variant="common">Common interests</button>
+        <button type="button" data-variant="trends">General trends</button>
+      </div>
+    </div>
+
+    <aside class="conversation-sidebar" aria-label="Recent conversations">
+      <nav class="sidebar-actions" aria-label="Main sections">
+        <button class="sidebar-action" type="button">
+          <span class="sidebar-icon plus-icon" aria-hidden="true">+</span>
+          <span>New Chat</span>
+        </button>
+        <button class="sidebar-action" type="button">
+          <span class="sidebar-icon document-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M7 3h7l4 4v14H7V3Z"></path>
+              <path d="M14 3v5h5"></path>
+              <path d="M9.5 12h5"></path>
+              <path d="M9.5 16h6"></path>
+            </svg>
+          </span>
+          <span>About You</span>
+        </button>
+        <button class="sidebar-action" type="button">
+          <span class="sidebar-icon delphi-action" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M18.7 7.6c.3 0 .6-.2.6-.6V6c0-.3-.2-.8-.9-.8-2.8.2-5.9 1.9-6.8 5.2-.9-3.3-4-5-6.8-5.2-.7-.1-.9.5-.9.8v1c0 .4.3.6.6.6s.9 0 3 .2c2 .2 3 1.9 3.2 3.6-2.2-.2-4.8-.5-5.6-.6-.9-.2-1 .4-1 1v.6c0 .6.1 1.2 1 1 .8-.2 3.4-.5 5.6-.6-.2 1.7-1.2 3.4-3.2 3.6-2.1.2-2.7.1-3 .2-.3 0-.6.2-.6.6v1c0 .3.2.8.9.8 2.8-.2 5.9-1.9 6.8-5.2.9 3.3 4 5 6.8 5.2.7.1.9-.5.9-.8v-1c0-.4-.3-.6-.6-.6s-.9 0-3-.2c-2-.2-3-1.9-3.2-3.6 2.2.2 4.8.5 5.6.6.9.2 1-.4 1-1v-.6c0-.6-.1-1.2-1-1-.8.2-3.4.5-5.6.6.2-1.7 1.2-3.4 3.2-3.6 2.1-.2 2.7-.1 3-.2Z"></path>
+            </svg>
+          </span>
+          <span>Your Delphi</span>
+        </button>
+      </nav>
+      <h2 class="sidebar-section-title">Conversations</h2>
+      <div class="conversation-list">
+        <button class="conversation-item active" type="button">
+          <span class="avatar-wrap">
+            <img src="assets/johnzimmer-profile.png" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>John Zimmer</strong>
+            </span>
+            <span class="conversation-preview">Co-founder, Lyft · Working on Yes&amp;</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Ben Greenfield</strong>
+              <time>2 days ago</time>
+            </span>
+            <span class="conversation-preview">What's the most populated city in India?</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Emily McDonald</strong>
+              <time>2 days ago</time>
+            </span>
+            <span class="conversation-preview">What's the most populated city in India?</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Brian Halligan</strong>
+              <time>2 days ago</time>
+            </span>
+            <span class="conversation-preview">End up.</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Moses Moody</strong>
+              <time>2 days ago</time>
+            </span>
+            <span class="conversation-preview">What's the most populated city in India?</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Al Mark</strong>
+              <time>2 days ago</time>
+            </span>
+            <span class="conversation-preview">what's the most populated city in India</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Vanessa Van Edwards</strong>
+              <time>2 days ago</time>
+            </span>
+            <span class="conversation-preview">What's the most populated city in India</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="assets/johnzimmer-profile.png" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>John Zimmer</strong>
+              <time>2 days ago</time>
+            </span>
+            <span class="conversation-preview">Wait. How would you pass the real John Zimmer?</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Dr. Céline Gounder</strong>
+              <time>2 days ago</time>
+            </span>
+            <span class="conversation-preview">What's the most populated city in India</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Zack Kass</strong>
+              <time>3 days ago</time>
+            </span>
+            <span class="conversation-preview">Bye.</span>
+          </span>
+        </button>
+
+        <button class="conversation-item" type="button">
+          <span class="avatar-wrap">
+            <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=160&q=80" alt="" />
+            <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
+          </span>
+          <span class="conversation-copy">
+            <span class="conversation-topline">
+              <strong>Zack Kass</strong>
+              <time>3 days ago</time>
+            </span>
+            <span class="conversation-preview">Do you ever get mad at the questions you get</span>
+          </span>
+        </button>
+      </div>
+      <button class="account-row" type="button" aria-label="Logged in account">
+        <img
+          src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80"
+          alt=""
+        />
+        <span>
+          <strong>Maya Patel</strong>
+          <span>Free</span>
+        </span>
+        <span class="account-chevron" aria-hidden="true"></span>
+      </button>
+    </aside>
 
     <main class="page-shell">
       <section class="profile-card" aria-labelledby="profile-title">
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="profile-shadow" aria-hidden="true"></div>
 
-        <div class="share-row">
-          <button class="share-button" type="button">Share</button>
+        <div class="profile-image-wrap">
+          <img
+            class="profile-image"
+            src="assets/johnzimmer-profile.png"
+            alt="johnzimmer profile"
+          />
+          <span class="profile-badge" aria-hidden="true">
+            <svg viewBox="0 0 36 36">
+              <path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path>
+            </svg>
+          </span>
         </div>
-
-        <img
-          class="profile-image"
-          src="assets/johnzimmer-profile.png"
-          alt="johnzimmer profile"
-        />
 
         <div class="title-block">
           <h1 id="profile-title">John Zimmer</h1>
@@ -54,7 +250,13 @@
             <img class="org-icon" src="assets/lyft-icon.png" alt="Lyft" />
             <p>Co-founder, Lyft · Working on Yes&amp;</p>
           </div>
-          <div class="mind-score">10.3K Mind</div>
+          <div class="profile-meta">
+            <span>10.3K Mind</span>
+            <span aria-hidden="true">·</span>
+            <span>12.8K conversations</span>
+            <span aria-hidden="true">·</span>
+            <span class="updated-at">Updated one day ago</span>
+          </div>
         </div>
 
         <div class="bio">
@@ -68,64 +270,34 @@
           <p>Ask me about cities and startup leadership.</p>
         </div>
 
-        <section class="suggestions" aria-labelledby="ask-me-about">
-          <h2 id="ask-me-about">Ask me about</h2>
-          <div class="question-list">
-            <button type="button">What transportation problem did you want to solve with Lyft?</button>
-            <button type="button">What are the lessons you took from competing with Uber?</button>
-            <button type="button">What are you building at Yes&amp; now?</button>
-          </div>
-        </section>
-
-        <section class="follow" aria-labelledby="follow-title">
-          <h2 id="follow-title">Follow John for more...</h2>
-          <div class="follow-line"></div>
-        </section>
-
-        <footer class="site-footer">
-          <span>© 2026 Delphi</span>
-          <span>·</span>
-          <a href="#">Terms</a>
-          <span>·</span>
-          <a href="#">Privacy</a>
-        </footer>
-      </section>
-    </main>
-
-    <aside class="chat-dock" aria-label="Chat preview">
-      <div class="composer">
-        <button class="view-chat" type="button" aria-expanded="false">
-          <span class="view-chat-label">Chat history</span>
-          <img class="chevron" src="assets/icons/chevron-up.svg" alt="" aria-hidden="true" />
-        </button>
-        <section class="chat-history" aria-live="polite">
-          <div class="empty-history">No chat history</div>
-          <div class="history-list"></div>
-        </section>
-        <div class="input-row">
-          <button class="icon-button attach" type="button" aria-label="Attach file">
-            <img src="assets/icons/attach.svg" alt="" aria-hidden="true" />
-          </button>
+        <div class="inline-composer" aria-label="Message John">
           <textarea
             aria-label="Message John"
-            rows="1"
-            placeholder="What transportation problem did you want to solve with Lyft?"
+            rows="2"
+            data-composer-input
+            placeholder="How can I help you today?"
           ></textarea>
-          <kbd class="tab-hint">TAB</kbd>
-          <button class="icon-button mic" type="button" aria-label="Record voice message">
-            <img src="assets/icons/mic.svg" alt="" aria-hidden="true" />
-          </button>
-          <button class="call-button" type="button" aria-label="Start call">
-            <img src="assets/icons/call.svg" alt="" aria-hidden="true" />
-            <span>Call</span>
-          </button>
+          <div class="composer-actions">
+            <button class="add-button" type="button" aria-label="Attach file">
+              <img src="assets/icons/attach.svg" alt="" aria-hidden="true" />
+            </button>
+            <div class="composer-controls">
+              <button class="icon-button mic" type="button" aria-label="Record voice message">
+                <img src="assets/icons/mic.svg" alt="" aria-hidden="true" />
+              </button>
+              <button class="call-button" type="button" aria-label="Start call">
+                <img src="assets/icons/call.svg" alt="" aria-hidden="true" />
+                <span>Call</span>
+              </button>
+            </div>
+          </div>
+          <p class="fine-print">
+            By using this service, you agree to the <a href="#">Terms of Service</a>
+            and <a href="#">Privacy Policy</a>.
+          </p>
         </div>
-        <p class="fine-print">
-          By using this service, you agree to the <a href="#">Terms of Service</a>
-          and <a href="#">Privacy Policy</a>.
-        </p>
-      </div>
-    </aside>
+      </section>
+    </main>
 
     <script src="script.js"></script>
   </body>

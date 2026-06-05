@@ -1,33 +1,23 @@
 const textarea = document.querySelector("textarea");
-const questionButtons = document.querySelectorAll(".question-list button");
-const chatDock = document.querySelector(".chat-dock");
-const viewChatButton = document.querySelector(".view-chat");
-const viewChatLabel = document.querySelector(".view-chat-label");
-const historyList = document.querySelector(".history-list");
 const callButton = document.querySelector(".call-button");
+const switcherButtons = document.querySelectorAll("[data-variant]");
 
-const chatHistory = [];
+const variants = {
+  current: {
+    placeholder: "How would you evaluate my city mobility idea?",
+  },
+  common: {
+    placeholder: "Where do my interests overlap most with your work?",
+  },
+  trends: {
+    placeholder: "What are people asking you about most right now?",
+  },
+};
 
-questionButtons.forEach((button) => {
+switcherButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    textarea.value = button.textContent.trim();
-    textarea.focus();
-    fitTextarea();
+    applyVariant(button.dataset.variant);
   });
-});
-
-viewChatButton.addEventListener("click", () => {
-  const isOpen = chatDock.classList.toggle("chat-open");
-
-  viewChatButton.setAttribute("aria-expanded", String(isOpen));
-  viewChatLabel.textContent = isOpen ? "Hide" : "Chat history";
-
-  if (!isOpen) {
-    chatDock.classList.remove("empty", "has-history");
-    return;
-  }
-
-  renderChatHistory();
 });
 
 textarea.addEventListener("keydown", (event) => {
@@ -36,7 +26,8 @@ textarea.addEventListener("keydown", (event) => {
   }
 
   event.preventDefault();
-  addLocalMessage();
+  textarea.value = "";
+  fitTextarea();
 });
 
 callButton.addEventListener("click", () => {
@@ -46,40 +37,21 @@ callButton.addEventListener("click", () => {
     : "Call";
 });
 
-function addLocalMessage() {
-  const text = textarea.value.trim();
-
-  if (!text) {
-    return;
-  }
-
-  chatHistory.push({ sender: "user", text });
-  textarea.value = "";
-  fitTextarea();
-
-  if (chatDock.classList.contains("chat-open")) {
-    renderChatHistory();
-  }
-}
-
-function renderChatHistory() {
-  const hasHistory = chatHistory.length > 0;
-
-  chatDock.classList.toggle("empty", !hasHistory);
-  chatDock.classList.toggle("has-history", hasHistory);
-  historyList.innerHTML = "";
-
-  chatHistory.forEach((message) => {
-    const bubble = document.createElement("div");
-    bubble.className = `message ${message.sender}`;
-    bubble.textContent = message.text;
-    historyList.appendChild(bubble);
-  });
-}
-
 function fitTextarea() {
   textarea.style.height = "auto";
-  textarea.style.height = `${Math.min(textarea.scrollHeight, 100)}px`;
+  textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`;
 }
 
 textarea.addEventListener("input", fitTextarea);
+
+function applyVariant(key) {
+  const variant = variants[key];
+
+  switcherButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.variant === key);
+  });
+
+  textarea.placeholder = variant.placeholder;
+}
+
+applyVariant("current");
