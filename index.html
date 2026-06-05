@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>John Zimmer | Delphi</title>
+    <meta
+      name="description"
+      content="A local static recreation of the public John Zimmer Delphi profile page."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar" aria-label="Delphi navigation">
+      <a class="brand-mark" href="#" aria-label="Go to dashboard">
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"
+          />
+        </svg>
+      </a>
+
+      <nav class="auth-actions" aria-label="Account actions">
+        <a class="button ghost" href="#">
+          <span class="icon" aria-hidden="true">↪</span>
+          <span>Sign In</span>
+        </a>
+        <a class="button dark desktop-only" href="#">
+          <span class="icon" aria-hidden="true">+</span>
+          <span>Create Your Delphi</span>
+        </a>
+      </nav>
+    </header>
+
+    <main class="page-shell">
+      <section class="profile-card" aria-labelledby="profile-title">
+        <div class="profile-glow" aria-hidden="true"></div>
+        <div class="profile-shadow" aria-hidden="true"></div>
+
+        <div class="share-row">
+          <button class="share-button" type="button">Share</button>
+        </div>
+
+        <img
+          class="profile-image"
+          src="assets/johnzimmer-profile.png"
+          alt="johnzimmer profile"
+        />
+
+        <div class="title-block">
+          <h1 id="profile-title">John Zimmer</h1>
+          <div class="headline-row">
+            <img class="org-icon" src="assets/lyft-icon.png" alt="Lyft" />
+            <p>Co-founder, Lyft · Working on Yes&amp;</p>
+          </div>
+          <div class="mind-score">10.3K Mind</div>
+        </div>
+
+        <div class="bio">
+          <p>I’m John, co-founder of Yes&amp; and former co-founder and President of Lyft.</p>
+          <p>
+            At Yes&amp;, we’re building companies around the idea that business can make
+            positive impact at scale. Before that, I helped build Lyft into one of the
+            defining transportation platforms of the last decade.
+          </p>
+          <p>I also recently appeared on The Library of Minds podcast</p>
+          <p>Ask me about cities and startup leadership.</p>
+        </div>
+
+        <section class="suggestions" aria-labelledby="ask-me-about">
+          <h2 id="ask-me-about">Ask me about</h2>
+          <div class="question-list">
+            <button type="button">What transportation problem did you want to solve with Lyft?</button>
+            <button type="button">What are the lessons you took from competing with Uber?</button>
+            <button type="button">What are you building at Yes&amp; now?</button>
+          </div>
+        </section>
+
+        <section class="follow" aria-labelledby="follow-title">
+          <h2 id="follow-title">Follow John for more...</h2>
+          <div class="follow-line"></div>
+        </section>
+
+        <footer class="site-footer">
+          <span>© 2026 Delphi</span>
+          <span>·</span>
+          <a href="#">Terms</a>
+          <span>·</span>
+          <a href="#">Privacy</a>
+        </footer>
+      </section>
+    </main>
+
+    <aside class="chat-dock" aria-label="Chat preview">
+      <div class="composer">
+        <button class="view-chat" type="button" aria-expanded="false">
+          <span class="view-chat-label">Chat history</span>
+          <img class="chevron" src="assets/icons/chevron-up.svg" alt="" aria-hidden="true" />
+        </button>
+        <section class="chat-history" aria-live="polite">
+          <div class="empty-history">No chat history</div>
+          <div class="history-list"></div>
+        </section>
+        <div class="input-row">
+          <textarea
+            aria-label="Message John"
+            rows="1"
+            placeholder="What transportation problem did you want to solve with Lyft?"
+          ></textarea>
+          <button class="send" type="button" aria-label="Send message">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 12.4 19.2 5c.5-.2 1 .3.8.8l-7.4 15.2c-.2.5-.9.4-1-.1L10 14l-6.9-1.6c-.5-.1-.6-.8-.1-1Z" />
+            </svg>
+          </button>
+        </div>
+        <p class="fine-print">
+          By using this service, you agree to the <a href="#">Terms of Service</a>
+          and <a href="#">Privacy Policy</a>.
+        </p>
+      </div>
+    </aside>
+
+    <script src="script.js"></script>
+  </body>
+</html>
