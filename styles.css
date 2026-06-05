@@ -697,6 +697,29 @@ h1 {
   margin: 0 0 18px;
 }
 
+.greeting-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 2px;
+  color: inherit;
+  font-weight: inherit;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.greeting-chip strong {
+  font-weight: 650;
+}
+
+.greeting-chip img {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  object-fit: cover;
+  box-shadow: 0 0 0 1px rgba(30, 28, 25, 0.08);
+}
+
 h2 {
   margin: 0 0 14px;
   font-family: "Pythia", "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -706,49 +729,117 @@ h2 {
   font-weight: 620;
 }
 
-.interest-starters {
+.signal-starters {
   position: relative;
   z-index: 1;
   width: min(100%, 720px);
   margin: 28px auto 0;
 }
 
-.interest-pills {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
+.signal-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
 }
 
-.interest-pill {
-  min-height: 42px;
-  padding: 0 16px;
+.signal-card {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 74px;
+  padding: 12px;
   border: 1px solid rgba(30, 28, 25, 0.1);
-  border-radius: 13px;
-  color: #605b55;
-  background: #f4f3f1;
-  font-size: 15px;
-  font-weight: 560;
+  border-radius: 15px;
+  color: #242321;
+  background: #f8f7f5;
+  text-align: left;
   cursor: pointer;
   transition: background 160ms ease, color 160ms ease, border-color 160ms ease,
     transform 160ms ease;
 }
 
-.interest-pill:hover {
-  color: #242321;
-  background: #efeeeb;
+.signal-card:hover {
+  background: #f1f0ed;
 }
 
-.interest-pill.active {
+.signal-card.active {
   border-color: rgba(36, 35, 33, 0.16);
   color: #fff;
   background: #242321;
 }
 
-.interest-pill:active,
+.signal-card:active,
 .starter-row:active {
   transform: scale(0.985);
+}
+
+.signal-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+  color: #6f6a63;
+  background: rgba(36, 35, 33, 0.06);
+}
+
+.signal-card.active .signal-icon {
+  color: #242321;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.signal-icon svg {
+  width: 19px;
+  height: 19px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+}
+
+.signal-icon.signal-art {
+  overflow: hidden;
+  color: inherit;
+  background: #e8e6e2;
+}
+
+.signal-icon.signal-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signal-card span:last-child {
+  min-width: 0;
+}
+
+.signal-card small,
+.signal-card strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signal-card small {
+  margin-bottom: 4px;
+  color: #8a857e;
+  font-size: 12px;
+  font-weight: 620;
+}
+
+.signal-card.active small {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.signal-card strong {
+  font-size: 13px;
+  font-weight: 560;
+  line-height: 1.2;
 }
 
 .starter-card {
@@ -765,8 +856,71 @@ h2 {
   display: none;
 }
 
+.starter-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 68px;
+  padding: 15px 18px 14px;
+  border-bottom: 1px solid rgba(30, 28, 25, 0.11);
+}
+
+.starter-card-title {
+  min-width: 0;
+  text-align: left;
+}
+
+.starter-card-title small {
+  display: block;
+  margin-bottom: 4px;
+  color: #8a857e;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.1;
+}
+
+.starter-card-title strong {
+  display: block;
+  color: #242321;
+  font-size: 16px;
+  font-weight: 620;
+  line-height: 1.25;
+}
+
+.starter-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: #605b55;
+  background: #f1f0ee;
+  font-size: 13px;
+  font-weight: 620;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.starter-link:hover {
+  color: #242321;
+  background: #e8e6e2;
+}
+
+.starter-link:active {
+  transform: scale(0.98);
+}
+
+.starter-link svg {
+  width: 15px;
+  height: 15px;
+}
+
 .starter-rows {
-  padding: 12px 16px;
+  padding: 4px 16px 12px;
 }
 
 .starter-row {
@@ -787,7 +941,8 @@ h2 {
   transition: background 160ms ease, transform 160ms ease;
 }
 
-.starter-row:hover {
+.starter-row:hover,
+.starter-row.is-active {
   background: rgba(33, 30, 27, 0.045);
 }
 
@@ -815,7 +970,8 @@ h2 {
   transition: opacity 160ms ease, right 160ms ease;
 }
 
-.starter-row:hover::after {
+.starter-row:hover::after,
+.starter-row.is-active::after {
   right: 12px;
   opacity: 1;
 }
@@ -850,7 +1006,7 @@ textarea {
   height: 100px;
   min-height: 100px;
   max-height: 160px;
-  padding: 0;
+  padding: 0 62px 0 0;
   border: 0;
   outline: 0;
   resize: none;
@@ -864,6 +1020,32 @@ textarea {
 textarea::placeholder {
   color: #807d77;
   opacity: 1;
+}
+
+.tab-hint {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 24px;
+  border: 1px solid rgba(30, 28, 25, 0.075);
+  border-radius: 9px;
+  color: #bbb6af;
+  background: rgba(255, 255, 255, 0.45);
+  box-shadow: none;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.inline-composer.has-text .tab-hint {
+  opacity: 0;
+  transform: translateY(-2px);
 }
 
 .composer-actions {
@@ -1399,19 +1581,26 @@ textarea::placeholder {
     line-height: 1.52;
   }
 
-  .interest-starters {
+  .signal-starters {
     margin-top: 24px;
   }
 
-  .interest-pills {
+  .signal-cards {
+    grid-template-columns: 1fr;
     gap: 8px;
   }
 
-  .interest-pill {
-    min-height: 38px;
-    padding-inline: 13px;
-    border-radius: 12px;
-    font-size: 14px;
+  .signal-card {
+    min-height: 64px;
+    grid-template-columns: 32px minmax(0, 1fr);
+    padding: 10px 12px;
+    border-radius: 14px;
+  }
+
+  .signal-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
   }
 
   .starter-row {
@@ -1469,8 +1658,26 @@ textarea::placeholder {
     font-size: 16px;
   }
 
-  .interest-pills {
-    justify-content: flex-start;
+  .signal-card strong {
+    font-size: 12px;
+  }
+
+  .starter-card-header {
+    align-items: flex-start;
+    padding: 14px;
+  }
+
+  .starter-card-title strong {
+    font-size: 15px;
+  }
+
+  .starter-link span {
+    display: none;
+  }
+
+  .starter-link {
+    width: 36px;
+    padding: 0;
   }
 
   .inline-composer {
@@ -1483,6 +1690,11 @@ textarea::placeholder {
     height: 84px;
     min-height: 84px;
     font-size: 20px;
+  }
+
+  .tab-hint {
+    top: 19px;
+    right: 18px;
   }
 
   .composer-actions {

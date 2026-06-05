@@ -5,59 +5,88 @@ const sendButton = document.querySelector(".send-button");
 const switcherButtons = document.querySelectorAll("[data-variant]");
 const navViewButtons = document.querySelectorAll("[data-nav-view]");
 const pageViews = document.querySelectorAll("[data-page-view]");
-const interestPills = document.querySelectorAll("[data-topic]");
+const signalCards = document.querySelectorAll("[data-signal]");
 const starterCard = document.querySelector("[data-starter-card]");
+const starterSource = document.querySelector("[data-starter-source]");
+const starterTitle = document.querySelector("[data-starter-title]");
+const starterLink = document.querySelector("[data-starter-link]");
 const starterRows = document.querySelector("[data-starter-rows]");
 
 const variants = {
   current: {
-    placeholder: "How would you evaluate my city mobility idea?",
+    placeholders: [
+      "How would you evaluate my city mobility idea?",
+      "What should I ask you about public trust?",
+      "How do mission-led companies explain themselves well?",
+      "What would you tell a journalist covering urban mobility?",
+    ],
   },
   common: {
-    placeholder: "Where do my interests overlap most with your work?",
+    placeholders: [
+      "Where do my interests overlap most with your work?",
+      "How should audience editors think about founder stories?",
+      "What makes a company’s story feel credible?",
+      "How do cities, media, and trust connect?",
+    ],
   },
   trends: {
-    placeholder: "What are people asking you about most right now?",
+    placeholders: [
+      "What are people asking you about most right now?",
+      "What recent coverage should I understand before we talk?",
+      "What topic around cities is getting attention lately?",
+      "What question should I ask based on your latest work?",
+    ],
   },
 };
 
-const topicStarters = {
-  cities: [
-    "What makes a city feel trustworthy to the people who live there?",
-    "How did Lyft change the way you think about urban behavior?",
-    "Where do you see the biggest gap between city policy and daily life?",
-    "What should journalists understand about transportation systems?",
-    "How can mission-led companies improve cities without overpromising?",
+const signalStarters = {
+  podcast: [
+    "What did you discuss on The Library of Minds that still feels unresolved?",
+    "What question from that conversation should more founders be asking?",
+    "How has your thinking changed since recording that episode?",
+    "What part of the podcast best explains your current work at Yes&?",
+    "What would you want a journalist to ask after listening to it?",
   ],
-  trust: [
-    "How do mission-led companies earn public trust before they are widely understood?",
-    "What did Lyft teach you about changing public behavior at scale?",
-    "How should journalism and startups think differently about credibility?",
-    "What makes a company’s story feel authentic instead of manufactured?",
-    "How do you rebuild trust after a public mistake?",
+  substack: [
+    "What was the main idea behind your recent piece?",
+    "How should founders think about mission without turning it into branding?",
+    "What did writing that article clarify for you?",
+    "Where do mission-led companies usually get the story wrong?",
+    "What should an audience editor pay attention to in that argument?",
   ],
-  stories: [
-    "What stories helped people understand Lyft in the early days?",
-    "How do founders know which story about their company is actually true?",
-    "What makes a public narrative move from interesting to useful?",
-    "How should a mission-led company talk about impact without sounding polished?",
-    "What do you wish more journalists asked startup leaders?",
-  ],
-  mobility: [
-    "What transportation problem still feels under-covered?",
-    "How should cities balance convenience, safety, and access?",
-    "What did ride-sharing reveal about what people really need from transit?",
-    "Where are mobility companies most likely to misunderstand local context?",
-    "What would you look for in a new urban mobility idea today?",
-  ],
-  leadership: [
-    "What leadership habits mattered most as Lyft scaled?",
-    "How do you keep a mission useful when a company grows quickly?",
-    "What should leaders communicate during uncertain public moments?",
-    "How do you decide when to listen to customers, teams, or critics?",
-    "What mistakes taught you the most about building at scale?",
+  forbes: [
+    "What did the Forbes piece get right or miss about your work?",
+    "Why do you think this topic is getting attention now?",
+    "What should readers understand beyond the headline?",
+    "How does public coverage change how you explain your work?",
+    "What question would you ask if you were editing that profile?",
   ],
 };
+
+const signalDetails = {
+  podcast: {
+    source: "Podcast",
+    title: "Library of Minds conversation with John Zimmer",
+    url: "#podcast",
+  },
+  substack: {
+    source: "Substack",
+    title: "Building mission-led companies",
+    url: "#substack",
+  },
+  forbes: {
+    source: "Forbes",
+    title: "Recent profile on John Zimmer and Yes&",
+    url: "#forbes",
+  },
+};
+
+let currentVariant = "current";
+let activeSuggestion = variants.current.placeholders[0];
+let placeholderIndex = 0;
+let placeholderTimer;
+let placeholderTypingTimer;
+let isStarterCardOpen = false;
 
 switcherButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -72,6 +101,12 @@ navViewButtons.forEach((button) => {
 });
 
 textarea.addEventListener("keydown", (event) => {
+  if (event.key === "Tab" && activeSuggestion) {
+    event.preventDefault();
+    acceptSuggestion(activeSuggestion);
+    return;
+  }
+
   if (event.key !== "Enter" || event.shiftKey) {
     return;
   }
@@ -80,6 +115,7 @@ textarea.addEventListener("keydown", (event) => {
   textarea.value = "";
   fitTextarea();
   updateComposerState();
+  updateRotatingPlaceholder();
 });
 
 callButton.addEventListener("click", () => {
@@ -93,11 +129,12 @@ sendButton.addEventListener("click", () => {
   textarea.value = "";
   fitTextarea();
   updateComposerState();
+  updateRotatingPlaceholder();
 });
 
-interestPills.forEach((button) => {
+signalCards.forEach((button) => {
   button.addEventListener("click", () => {
-    toggleStarterCard(button.dataset.topic);
+    toggleStarterCard(button.dataset.signal);
   });
 });
 
@@ -109,70 +146,175 @@ function fitTextarea() {
 textarea.addEventListener("input", () => {
   fitTextarea();
   updateComposerState();
+  updateRotatingPlaceholder();
 });
 
 function applyVariant(key) {
   const variant = variants[key];
+  currentVariant = key;
+  placeholderIndex = 0;
 
   switcherButtons.forEach((button) => {
     button.classList.toggle("active", button.dataset.variant === key);
   });
 
-  textarea.placeholder = variant.placeholder;
+  updateRotatingPlaceholder();
 }
 
-function toggleStarterCard(topic) {
-  const selectedPill = [...interestPills].find((button) => button.dataset.topic === topic);
-  const isOpenTopic = selectedPill?.classList.contains("active") && !starterCard.hidden;
+function toggleStarterCard(signal) {
+  const selectedCard = [...signalCards].find((button) => button.dataset.signal === signal);
+  const isOpenSignal = selectedCard?.classList.contains("active") && !starterCard.hidden;
 
-  if (isOpenTopic) {
+  if (isOpenSignal) {
     closeStarterCard();
     return;
   }
 
-  openStarterCard(topic);
+  openStarterCard(signal);
 }
 
-function openStarterCard(topic) {
-  const starters = topicStarters[topic];
+function openStarterCard(signal) {
+  const starters = signalStarters[signal];
+  const details = signalDetails[signal];
 
-  if (!starters) {
+  if (!starters || !details) {
     return;
   }
 
-  interestPills.forEach((button) => {
-    button.classList.toggle("active", button.dataset.topic === topic);
+  signalCards.forEach((button) => {
+    button.classList.toggle("active", button.dataset.signal === signal);
   });
 
+  starterSource.textContent = details.source;
+  starterTitle.textContent = details.title;
+  starterLink.href = details.url;
+  starterLink.setAttribute("aria-label", `Open ${details.title}`);
+
   starterRows.innerHTML = "";
+  isStarterCardOpen = true;
+  stopPlaceholderRotation();
+  setActiveSuggestion(starters[0]);
 
   starters.forEach((starter) => {
     const row = document.createElement("button");
     row.className = "starter-row";
     row.type = "button";
     row.textContent = starter;
+    row.addEventListener("mouseenter", () => {
+      setActiveSuggestion(starter);
+      setActiveStarterRow(row);
+    });
+    row.addEventListener("focus", () => {
+      setActiveSuggestion(starter);
+      setActiveStarterRow(row);
+    });
     row.addEventListener("click", () => {
-      textarea.value = starter;
-      fitTextarea();
-      updateComposerState();
-      textarea.focus();
-      closeStarterCard();
+      acceptSuggestion(starter);
     });
     starterRows.append(row);
   });
+
+  setActiveStarterRow(starterRows.querySelector(".starter-row"));
 
   starterCard.hidden = false;
 }
 
 function closeStarterCard() {
   starterCard.hidden = true;
-  interestPills.forEach((button) => {
+  isStarterCardOpen = false;
+  signalCards.forEach((button) => {
     button.classList.remove("active");
   });
+  updateRotatingPlaceholder();
 }
 
 function updateComposerState() {
   composer.classList.toggle("has-text", textarea.value.trim().length > 0);
+}
+
+function setActiveSuggestion(suggestion, options = {}) {
+  const { animate = true } = options;
+  activeSuggestion = suggestion;
+
+  if (!animate || textarea.value.trim().length > 0) {
+    stopPlaceholderTyping();
+    textarea.placeholder = suggestion;
+    return;
+  }
+
+  typePlaceholder(suggestion);
+}
+
+function setActiveStarterRow(activeRow) {
+  starterRows.querySelectorAll(".starter-row").forEach((row) => {
+    row.classList.toggle("is-active", row === activeRow);
+  });
+}
+
+function acceptSuggestion(suggestion) {
+  textarea.value = suggestion;
+  stopPlaceholderTyping();
+  fitTextarea();
+  updateComposerState();
+  textarea.focus();
+  closeStarterCard();
+}
+
+function getCurrentPlaceholders() {
+  return variants[currentVariant].placeholders;
+}
+
+function updateRotatingPlaceholder() {
+  if (isStarterCardOpen || textarea.value.trim().length > 0) {
+    stopPlaceholderRotation();
+    return;
+  }
+
+  const placeholders = getCurrentPlaceholders();
+  setActiveSuggestion(placeholders[placeholderIndex % placeholders.length]);
+  startPlaceholderRotation();
+}
+
+function startPlaceholderRotation() {
+  stopPlaceholderRotation();
+  placeholderTimer = window.setInterval(() => {
+    if (isStarterCardOpen || textarea.value.trim().length > 0) {
+      stopPlaceholderRotation();
+      return;
+    }
+
+    const placeholders = getCurrentPlaceholders();
+    placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+    setActiveSuggestion(placeholders[placeholderIndex]);
+  }, 3200);
+}
+
+function stopPlaceholderRotation() {
+  window.clearInterval(placeholderTimer);
+}
+
+function typePlaceholder(suggestion) {
+  stopPlaceholderTyping();
+  textarea.placeholder = "";
+
+  let index = 0;
+  placeholderTypingTimer = window.setInterval(() => {
+    if (textarea.value.trim().length > 0) {
+      stopPlaceholderTyping();
+      return;
+    }
+
+    index += 1;
+    textarea.placeholder = suggestion.slice(0, index);
+
+    if (index >= suggestion.length) {
+      stopPlaceholderTyping();
+    }
+  }, 18);
+}
+
+function stopPlaceholderTyping() {
+  window.clearInterval(placeholderTypingTimer);
 }
 
 function showPage(view) {

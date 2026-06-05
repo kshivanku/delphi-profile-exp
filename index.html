@@ -261,22 +261,81 @@
 
         <div class="bio">
           <p>
-            Hi Maya, I’m John. Given your work in journalism and audience at The
-            Atlantic, we could talk about how cities, stories, and mission-led
-            companies earn public trust, or anything else on your mind.
+            <span class="greeting-chip">
+              Hi
+              <img
+                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&q=80"
+                alt=""
+              />
+              <strong>Maya,</strong>
+            </span>
+            I’m John. Given your work in journalism and audience at The Atlantic,
+            we could talk about how cities, stories, and mission-led companies
+            earn public trust, or anything else on your mind.
           </p>
         </div>
 
-        <div class="interest-starters" aria-label="Common interests">
-          <div class="interest-pills">
-            <button class="interest-pill" type="button" data-topic="cities">Cities</button>
-            <button class="interest-pill" type="button" data-topic="trust">Trust</button>
-            <button class="interest-pill" type="button" data-topic="stories">Stories</button>
-            <button class="interest-pill" type="button" data-topic="mobility">Mobility</button>
-            <button class="interest-pill" type="button" data-topic="leadership">Leadership</button>
+        <div class="signal-starters" aria-label="Recent starting points">
+          <div class="signal-cards">
+            <button class="signal-card" type="button" data-signal="podcast">
+              <span class="signal-icon signal-art" aria-hidden="true">
+                <img src="assets/LibraryOfMinds.png" alt="" />
+              </span>
+              <span>
+                <small>Podcast</small>
+                <strong>Library of Minds conversation</strong>
+              </span>
+            </button>
+            <button class="signal-card" type="button" data-signal="substack">
+              <span class="signal-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M6 3h12v18l-6-3-6 3Z" />
+                  <path d="M9 8h6" />
+                  <path d="M9 12h6" />
+                </svg>
+              </span>
+              <span>
+                <small>Substack</small>
+                <strong>Building mission-led companies</strong>
+              </span>
+            </button>
+            <button class="signal-card" type="button" data-signal="forbes">
+              <span class="signal-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M4 5h16v14H4Z" />
+                  <path d="M8 9h8" />
+                  <path d="M8 13h5" />
+                </svg>
+              </span>
+              <span>
+                <small>Forbes</small>
+                <strong>Recent profile on John</strong>
+              </span>
+            </button>
           </div>
 
           <div class="starter-card" data-starter-card hidden>
+            <div class="starter-card-header">
+              <div class="starter-card-title">
+                <small data-starter-source>Podcast</small>
+                <strong data-starter-title>Library of Minds conversation</strong>
+              </div>
+              <a class="starter-link" href="#" target="_blank" rel="noreferrer" data-starter-link>
+                <span>Open</span>
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M7 17 17 7" />
+                  <path d="M9 7h8v8" />
+                </svg>
+              </a>
+            </div>
             <div class="starter-rows" data-starter-rows></div>
           </div>
         </div>
@@ -288,6 +347,7 @@
             data-composer-input
             placeholder="How can I help you today?"
           ></textarea>
+          <span class="tab-hint" aria-hidden="true">TAB</span>
           <div class="composer-actions">
             <button class="add-button" type="button" aria-label="Attach file">
               <img src="assets/icons/attach.svg" alt="" aria-hidden="true" />
