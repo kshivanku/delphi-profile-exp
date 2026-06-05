@@ -1,6 +1,8 @@
 const textarea = document.querySelector("textarea");
 const callButton = document.querySelector(".call-button");
 const switcherButtons = document.querySelectorAll("[data-variant]");
+const navViewButtons = document.querySelectorAll("[data-nav-view]");
+const pageViews = document.querySelectorAll("[data-page-view]");
 
 const variants = {
   current: {
@@ -17,6 +19,12 @@ const variants = {
 switcherButtons.forEach((button) => {
   button.addEventListener("click", () => {
     applyVariant(button.dataset.variant);
+  });
+});
+
+navViewButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    showPage(button.dataset.navView);
   });
 });
 
@@ -54,4 +62,23 @@ function applyVariant(key) {
   textarea.placeholder = variant.placeholder;
 }
 
+function showPage(view) {
+  pageViews.forEach((page) => {
+    page.classList.toggle("active", page.dataset.pageView === view);
+  });
+
+  navViewButtons.forEach((button) => {
+    const isActive = button.dataset.navView === view;
+    if (button.classList.contains("sidebar-action")) {
+      button.classList.toggle("active", isActive);
+    }
+
+    if (button.classList.contains("conversation-item")) {
+      button.classList.toggle("active", isActive);
+      button.classList.toggle("view-active", isActive);
+    }
+  });
+}
+
 applyVariant("current");
+showPage("profile");

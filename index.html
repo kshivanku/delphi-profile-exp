@@ -38,7 +38,7 @@
           <span class="sidebar-icon plus-icon" aria-hidden="true">+</span>
           <span>New Chat</span>
         </button>
-        <button class="sidebar-action" type="button">
+        <button class="sidebar-action" type="button" data-nav-view="about">
           <span class="sidebar-icon document-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24">
               <path d="M7 3h7l4 4v14H7V3Z"></path>
@@ -60,7 +60,7 @@
       </nav>
       <h2 class="sidebar-section-title">Conversations</h2>
       <div class="conversation-list">
-        <button class="conversation-item active" type="button">
+        <button class="conversation-item active" type="button" data-nav-view="profile">
           <span class="avatar-wrap">
             <img src="assets/johnzimmer-profile.png" alt="" />
             <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
@@ -227,7 +227,7 @@
     </aside>
 
     <main class="page-shell">
-      <section class="profile-card" aria-labelledby="profile-title">
+      <section class="profile-card page-view active" aria-labelledby="profile-title" data-page-view="profile">
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="profile-shadow" aria-hidden="true"></div>
 
@@ -296,6 +296,120 @@
             and <a href="#">Privacy Policy</a>.
           </p>
         </div>
+      </section>
+
+      <section class="about-view page-view" aria-labelledby="about-title" data-page-view="about">
+        <div class="about-header">
+          <h1 id="about-title">About You</h1>
+          <p>
+            This is the shared context Maya’s Delphis use to understand who she is,
+            what she cares about, and how to make each conversation feel more useful.
+          </p>
+        </div>
+
+        <article class="context-document" aria-label="Maya shared context document">
+          <div class="document-toolbar">
+            <strong>about-maya</strong>
+            <button class="wand-button" type="button" aria-label="Ask AI to update this context">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="m15 4 5 5" />
+                <path d="m14 5 5 5" />
+                <path d="M4 20 19 5" />
+                <path d="M7 3v4" />
+                <path d="M5 5h4" />
+                <path d="M19 13v4" />
+                <path d="M17 15h4" />
+              </svg>
+            </button>
+          </div>
+
+          <section class="context-section">
+            <h2>Who Maya Is</h2>
+            <div class="editable-block" contenteditable="true" spellcheck="false">
+              Maya Patel is a multi-award winning producer, journalist, and senior
+              audience editor at The Atlantic. She believes in journalism, loves
+              stories, and is often interested in when her next cup of coffee will be.
+            </div>
+          </section>
+
+          <section class="context-section">
+            <h2>Current Interests</h2>
+            <div class="editable-list" contenteditable="true" spellcheck="false">
+              <p>- Journalism that earns attention without flattening nuance.</p>
+              <p>- Audience strategy for deeply reported stories and ambitious editorial projects.</p>
+              <p>- How people discover, trust, and share news across social platforms.</p>
+              <p>- Narrative structure, voice, and the craft behind memorable interviews.</p>
+              <p>- Media business models, subscriptions, newsletters, and loyal readership.</p>
+              <p>- Culture stories that reveal how people live, work, and make meaning.</p>
+              <p>- Coffee shops, coffee rituals, and the search for the next good cup.</p>
+              <p>- Public trust, misinformation, and the future of civic information.</p>
+              <p>- Books, podcasts, documentaries, and other story forms that travel well.</p>
+              <p>- Travel, cities, restaurants, and the small details that make places feel alive.</p>
+            </div>
+          </section>
+
+          <section class="context-section">
+            <h2>Rules</h2>
+            <div class="editable-list" contenteditable="true" spellcheck="false">
+              <p>- Keep this document updated as new information and conversations happen.</p>
+              <p>- Do not record any conversation or detail that Maya wants kept off the record.</p>
+            </div>
+          </section>
+        </article>
+
+        <section class="connected-section">
+          <div class="section-heading-row">
+            <h2>Connected Apps</h2>
+          </div>
+          <p class="context-helper">
+            Linking accounts gives Delphis a fresher read on your work,
+            interests, and current projects.
+          </p>
+          <div class="connected-apps">
+            <button class="app-connection connected" type="button">
+              <span class="app-icon linkedin">in</span>
+              <span>
+                <strong>LinkedIn</strong>
+                <small>Updates work history and professional interests</small>
+              </span>
+              <em>Connected</em>
+            </button>
+            <button class="app-connection" type="button">
+              <span class="app-icon instagram">◎</span>
+              <span>
+                <strong>Instagram</strong>
+                <small>Add creative interests, places, and lifestyle signals</small>
+              </span>
+              <em>Link</em>
+            </button>
+            <button class="app-connection" type="button">
+              <span class="app-icon tiktok">♪</span>
+              <span>
+                <strong>TikTok</strong>
+                <small>Keep up with topics, creators, and cultural references</small>
+              </span>
+              <em>Link</em>
+            </button>
+            <button class="app-connection" type="button">
+              <span class="app-icon twitter">X</span>
+              <span>
+                <strong>X</strong>
+                <small>Refresh what Maya is reading, sharing, and reacting to</small>
+              </span>
+              <em>Link</em>
+            </button>
+          </div>
+        </section>
+
+
       </section>
     </main>
 
