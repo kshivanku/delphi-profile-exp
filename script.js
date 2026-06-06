@@ -1,4 +1,6 @@
 const profileMiniJump = document.querySelector("[data-profile-jump]");
+const brandMark = document.querySelector(".brand-mark");
+const mobileNavBackdrop = document.querySelector(".mobile-nav-backdrop");
 const johnConversationRows = document.querySelectorAll("[data-reveal-on-john]");
 const navViewButtons = document.querySelectorAll("[data-nav-view]");
 const pageViews = document.querySelectorAll("[data-page-view]");
@@ -78,11 +80,41 @@ const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")
 });
 
 let activeContext = null;
+const mobileNavQuery = window.matchMedia("(max-width: 760px)");
+
+function setMobileNavOpen(isOpen) {
+  document.body.classList.toggle("mobile-nav-open", isOpen);
+  brandMark?.setAttribute("aria-expanded", String(isOpen));
+}
+
+function toggleMobileNav() {
+  setMobileNavOpen(!document.body.classList.contains("mobile-nav-open"));
+}
+
+brandMark?.addEventListener("click", (event) => {
+  if (!mobileNavQuery.matches) {
+    return;
+  }
+
+  event.preventDefault();
+  toggleMobileNav();
+});
+
+mobileNavBackdrop?.addEventListener("click", () => {
+  setMobileNavOpen(false);
+});
 
 navViewButtons.forEach((button) => {
   button.addEventListener("click", () => {
+    setMobileNavOpen(false);
     showPage(button.dataset.navView);
   });
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    setMobileNavOpen(false);
+  }
 });
 
 chatContexts.forEach((context) => {

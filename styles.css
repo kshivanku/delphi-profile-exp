@@ -220,6 +220,10 @@ a {
   pointer-events: none;
 }
 
+.mobile-nav-backdrop {
+  display: none;
+}
+
 .sidebar-actions {
   display: flex;
   flex-direction: column;
@@ -1987,7 +1991,38 @@ textarea::placeholder {
 
 @media (max-width: 760px) {
   .conversation-sidebar {
-    display: none;
+    inset: 60px auto 0 0;
+    z-index: 28;
+    display: flex;
+    width: min(354px, 88vw);
+    padding: 24px 0 18px 14px;
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: 20px 0 34px rgba(31, 29, 26, 0.12);
+    transform: translateX(-105%);
+    transition: transform 220ms ease;
+    pointer-events: auto;
+  }
+
+  body.mobile-nav-open .conversation-sidebar {
+    transform: translateX(0);
+  }
+
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 60px 0 0;
+    z-index: 27;
+    display: block;
+    border: 0;
+    background: rgba(31, 29, 26, 0);
+    opacity: 0;
+    pointer-events: none;
+    transition: background 220ms ease, opacity 220ms ease;
+  }
+
+  body.mobile-nav-open .mobile-nav-backdrop {
+    background: rgba(31, 29, 26, 0.1);
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .sidebar-divider {
@@ -1999,6 +2034,7 @@ textarea::placeholder {
   }
 
   .topbar {
+    z-index: 30;
     height: 60px;
     padding-inline: 14px;
   }
@@ -2038,8 +2074,10 @@ textarea::placeholder {
   }
 
   .profile-share {
-    top: -48px;
-    right: 0;
+    position: fixed;
+    top: 74px;
+    right: 20px;
+    z-index: 31;
     height: 32px;
     padding: 0 11px;
     font-size: 13px;

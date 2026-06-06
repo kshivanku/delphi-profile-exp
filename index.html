@@ -12,7 +12,13 @@
   </head>
   <body>
     <header class="topbar" aria-label="Delphi navigation">
-      <a class="brand-mark" href="#" aria-label="Go to dashboard">
+      <a
+        class="brand-mark"
+        href="#"
+        aria-label="Open navigation"
+        aria-controls="conversation-sidebar"
+        aria-expanded="false"
+      >
         <svg viewBox="0 0 36 36" aria-hidden="true">
           <path
             fill="currentColor"
@@ -22,7 +28,8 @@
       </a>
     </header>
     <div class="sidebar-divider" aria-hidden="true"></div>
-    <aside class="conversation-sidebar" aria-label="Recent conversations">
+    <button class="mobile-nav-backdrop" type="button" aria-label="Close navigation"></button>
+    <aside class="conversation-sidebar" id="conversation-sidebar" aria-label="Recent conversations">
       <nav class="global-tabs" aria-label="Workspace tabs">
         <button class="active" type="button">Me</button>
         <button type="button" aria-disabled="true">My Delphi</button>
