@@ -12,6 +12,9 @@ const accountChevron = document.querySelector("[data-account-chevron]");
 const contextDocument = document.querySelector(".context-document");
 const connectedSection = document.querySelector(".connected-section");
 const contextEmpty = document.querySelector("[data-context-empty]");
+const guestSpotify = document.querySelector("[data-guest-spotify]");
+const authProfileCopy = document.querySelectorAll("[data-auth-profile-copy]");
+const guestProfileCopy = document.querySelectorAll("[data-guest-profile-copy]");
 const navViewButtons = document.querySelectorAll("[data-nav-view]");
 const pageViews = document.querySelectorAll("[data-page-view]");
 const profileModalButtons = document.querySelectorAll("[data-profile-modal]");
@@ -61,6 +64,7 @@ const profileDescriptions = {
 const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")).map((profile) => {
   const key = profile.dataset.profileKey;
   const typedIntro = profile.querySelector("[data-typed-intro]");
+  const guestTypedIntro = profile.querySelector("[data-guest-typed-intro]");
   const chatThread = profile.querySelector("[data-chat-thread]");
   const hasConversationHistory = Boolean(chatThread?.children.length);
 
@@ -78,7 +82,11 @@ const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")
     chatThread,
     questionSuggestions: profile.querySelectorAll(".question-suggestion"),
     typedIntro,
+    authTypedIntro: typedIntro,
+    guestTypedIntro,
     introFullText: typedIntro?.textContent || "",
+    authIntroFullText: typedIntro?.textContent || "",
+    guestIntroFullText: guestTypedIntro?.textContent || "",
     activeSuggestion: defaultPlaceholders[key]?.[0] || "",
     placeholderIndex: 0,
     placeholderTimer: null,
@@ -164,6 +172,16 @@ function setAccountState(nextIsLoggedIn) {
     if (contextEmpty) {
       contextEmpty.hidden = true;
     }
+    if (guestSpotify) {
+      guestSpotify.hidden = true;
+    }
+    authProfileCopy.forEach((node) => {
+      node.hidden = false;
+    });
+    guestProfileCopy.forEach((node) => {
+      node.hidden = true;
+    });
+    resetAvailableIntroAnimations();
     return;
   }
 
@@ -195,6 +213,16 @@ function setAccountState(nextIsLoggedIn) {
   if (contextEmpty) {
     contextEmpty.hidden = false;
   }
+  if (guestSpotify) {
+    guestSpotify.hidden = false;
+  }
+  authProfileCopy.forEach((node) => {
+    node.hidden = true;
+  });
+  guestProfileCopy.forEach((node) => {
+    node.hidden = false;
+  });
+  resetAvailableIntroAnimations();
 }
 
 accountToggle?.addEventListener("click", () => {
@@ -549,6 +577,8 @@ function stopPlaceholderTyping(context) {
 }
 
 function startEmptyChatIntro(context) {
+  syncActiveIntroCopy(context);
+
   if (!context.profile || !context.typedIntro || context.chatStarted || context.introAnimationStarted) {
     return;
   }
@@ -573,6 +603,36 @@ function startEmptyChatIntro(context) {
     context.profile.classList.add("intro-typing");
     typeIntroText(context);
   }, 700);
+}
+
+function syncActiveIntroCopy(context) {
+  const useGuestIntro = !isLoggedIn && context.guestTypedIntro;
+
+  context.typedIntro = useGuestIntro ? context.guestTypedIntro : context.authTypedIntro;
+  context.introFullText = useGuestIntro ? context.guestIntroFullText : context.authIntroFullText;
+}
+
+function resetAvailableIntroAnimations() {
+  chatContexts.forEach((context) => {
+    if (context.chatStarted || (!context.authTypedIntro && !context.guestTypedIntro)) {
+      return;
+    }
+
+    stopIntroTyping(context);
+    if (context.authTypedIntro) {
+      context.authTypedIntro.textContent = context.authIntroFullText;
+    }
+    if (context.guestTypedIntro) {
+      context.guestTypedIntro.textContent = context.guestIntroFullText;
+    }
+    context.profile.classList.remove("intro-profile-ready", "intro-typing", "intro-controls-ready");
+    context.profile.classList.add("intro-pending");
+    context.introAnimationStarted = false;
+  });
+
+  if (activeContext && !activeContext.chatStarted) {
+    startEmptyChatIntro(activeContext);
+  }
 }
 
 function typeIntroText(context) {

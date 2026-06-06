@@ -867,6 +867,7 @@ a {
   position: relative;
   width: min(100%, 672px);
   margin: 0 auto;
+  padding-bottom: 220px;
 }
 
 .profile-share {
@@ -1108,6 +1109,23 @@ h1 {
   white-space: nowrap;
 }
 
+.guest-spotify {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 360px);
+  margin: 24px auto 0;
+}
+
+.guest-spotify iframe {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 496 / 279;
+  height: auto;
+  border: 0;
+  border-radius: 12px;
+}
+
 .bio {
   max-width: 640px;
   margin: 32px auto 0;
@@ -1188,10 +1206,6 @@ h1 {
 .profile-card.chat-started .bio,
 .profile-card.chat-started .question-suggestions {
   display: none;
-}
-
-.profile-card.chat-started {
-  padding-bottom: 220px;
 }
 
 .greeting-chip {
@@ -1372,18 +1386,6 @@ h2 {
 }
 
 .inline-composer {
-  position: relative;
-  z-index: 1;
-  width: min(100%, 720px);
-  margin: 10px auto 0;
-  padding: 20px 28px 18px;
-  border: 1px solid rgba(30, 28, 25, 0.2);
-  border-radius: 22px;
-  background: #fff;
-  box-shadow: none;
-}
-
-.profile-card.chat-started .inline-composer {
   position: fixed;
   right: 24px;
   bottom: 56px;
@@ -1392,25 +1394,18 @@ h2 {
   width: min(720px, calc(100vw - 408px));
   margin: 0 auto;
   padding: 14px 20px 12px;
+  border: 1px solid rgba(30, 28, 25, 0.2);
+  border-radius: 22px;
+  background: #fff;
   box-shadow: 0 12px 28px rgba(30, 28, 25, 0.08);
-}
-
-.profile-card.chat-started textarea {
-  height: 38px;
-  min-height: 38px;
-  max-height: 104px;
-}
-
-.profile-card.chat-started .composer-actions {
-  margin-top: 6px;
 }
 
 textarea {
   width: 100%;
   min-width: 0;
-  height: 78px;
-  min-height: 78px;
-  max-height: 160px;
+  height: 38px;
+  min-height: 38px;
+  max-height: 104px;
   padding: 0 62px 0 0;
   border: 0;
   outline: 0;
@@ -1462,7 +1457,7 @@ textarea::placeholder {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin-top: 12px;
+  margin-top: 6px;
 }
 
 .composer-controls {
@@ -2247,17 +2242,16 @@ textarea::placeholder {
 
   .profile-card {
     width: 100%;
-  }
-
-  .profile-card.chat-started {
     padding-bottom: 214px;
   }
 
-  .profile-card.chat-started .inline-composer {
+  .inline-composer {
     right: 20px;
     bottom: 52px;
     left: 20px;
     width: auto;
+    padding: 14px 20px 12px;
+    border-radius: 22px;
   }
 
   .profile-glow,
@@ -2317,12 +2311,6 @@ textarea::placeholder {
     font-size: 15px;
   }
 
-  .inline-composer {
-    margin-top: 8px;
-    padding: 20px;
-    border-radius: 22px;
-  }
-
   .composer-actions {
     align-items: flex-end;
   }
@@ -2368,19 +2356,19 @@ textarea::placeholder {
   }
 
   .inline-composer {
-    margin-top: 8px;
-    padding: 16px;
+    padding: 14px 16px 12px;
     border-radius: 20px;
   }
 
-  .profile-card.chat-started .inline-composer {
+  .inline-composer {
     right: 16px;
     left: 16px;
   }
 
   textarea {
-    height: 72px;
-    min-height: 72px;
+    height: 38px;
+    min-height: 38px;
+    max-height: 104px;
     font-size: 14px;
   }
 
