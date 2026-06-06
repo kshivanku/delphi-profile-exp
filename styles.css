@@ -76,6 +76,10 @@
   box-sizing: border-box;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 html,
 body {
   min-height: 100%;
@@ -276,9 +280,10 @@ a {
 
 .sidebar-icon.plus-icon {
   color: #69645e;
-  font-size: 34px;
+  font-size: 31px;
   font-weight: 300;
   line-height: 1;
+  transform: translateY(1px);
 }
 
 .sidebar-icon.delphi-action svg {
@@ -822,7 +827,7 @@ a {
   width: 172px;
   padding: 0;
   border: 0;
-  color: #f7f4ef;
+  color: #242321;
   background: transparent;
   cursor: pointer;
   opacity: 0;
@@ -836,7 +841,7 @@ a {
 }
 
 .profile-mini-jump:hover {
-  color: #fff;
+  color: #242321;
 }
 
 .profile-mini-jump img {
@@ -847,34 +852,29 @@ a {
   margin-bottom: -10px;
   border-radius: 35%;
   object-fit: cover;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22),
-    0 0 0 1px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 24px rgba(30, 28, 25, 0.14),
+    0 0 0 1px rgba(30, 28, 25, 0.08);
 }
 
 .profile-mini-label {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
   min-width: 154px;
   min-height: 42px;
-  padding: 10px 16px 9px;
+  padding: 10px 18px 9px;
+  border: 1px solid rgba(30, 28, 25, 0.1);
   border-radius: 18px;
-  background: rgba(35, 34, 32, 0.9);
-  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 26px rgba(30, 28, 25, 0.12);
   backdrop-filter: blur(14px);
+  text-align: center;
 }
 
 .profile-mini-label span {
   font-size: 16px;
-  font-weight: 520;
+  font-weight: 560;
   line-height: 1;
-}
-
-.profile-mini-label svg {
-  width: 17px;
-  height: 17px;
-  color: rgba(247, 244, 239, 0.72);
 }
 
 .profile-glow,

@@ -1,4 +1,5 @@
 const profileMiniJump = document.querySelector("[data-profile-jump]");
+const johnConversationRows = document.querySelectorAll("[data-reveal-on-john]");
 const navViewButtons = document.querySelectorAll("[data-nav-view]");
 const pageViews = document.querySelectorAll("[data-page-view]");
 const profileModalButtons = document.querySelectorAll("[data-profile-modal]");
@@ -48,6 +49,8 @@ const profileDescriptions = {
 const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")).map((profile) => {
   const key = profile.dataset.profileKey;
   const typedIntro = profile.querySelector("[data-typed-intro]");
+  const chatThread = profile.querySelector("[data-chat-thread]");
+  const hasConversationHistory = Boolean(chatThread?.children.length);
 
   return {
     key,
@@ -60,7 +63,7 @@ const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")
     composer: profile.querySelector(".inline-composer"),
     callButton: profile.querySelector(".call-button"),
     sendButton: profile.querySelector(".send-button"),
-    chatThread: profile.querySelector("[data-chat-thread]"),
+    chatThread,
     questionSuggestions: profile.querySelectorAll(".question-suggestion"),
     typedIntro,
     introFullText: typedIntro?.textContent.trim() || "",
@@ -69,8 +72,8 @@ const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")
     placeholderTimer: null,
     placeholderTypingTimer: null,
     introTypingTimer: null,
-    chatStarted: false,
-    introAnimationStarted: false,
+    chatStarted: profile.classList.contains("chat-started") || hasConversationHistory,
+    introAnimationStarted: profile.classList.contains("chat-started") || hasConversationHistory,
   };
 });
 
@@ -123,8 +126,8 @@ chatContexts.forEach((context) => {
 });
 
 profileMiniJump?.addEventListener("click", () => {
-  activeContext?.profile.scrollIntoView({
-    block: "start",
+  window.scrollTo({
+    top: 0,
     behavior: "smooth",
   });
 });
@@ -255,7 +258,7 @@ function updateProfileMiniJump() {
   }
 
   profileMiniJump.querySelector("img").src = activeContext.image;
-  profileMiniJump.querySelector(".profile-mini-label span").textContent = activeContext.name;
+  profileMiniJump.querySelector("[data-profile-mini-name]").textContent = activeContext.name;
 
   const shouldShow =
     activeContext.chatStarted &&
@@ -300,6 +303,31 @@ function scrollMessageAboveComposer(context, messageRow) {
         behavior: "smooth",
       });
     }
+  });
+}
+
+function scrollLatestMessageToComposer(context, options = {}) {
+  const { behavior = "smooth", clearance = 10 } = options;
+  const lastMessage = context.chatThread?.querySelector(".message-row:last-of-type");
+
+  if (!lastMessage) {
+    return;
+  }
+
+  window.requestAnimationFrame(() => {
+    const composerRect = context.composer.getBoundingClientRect();
+    const messageRect = lastMessage.getBoundingClientRect();
+    const targetBottom = composerRect.top - clearance;
+    const delta = messageRect.bottom - targetBottom;
+
+    if (Math.abs(delta) < 2) {
+      return;
+    }
+
+    window.scrollBy({
+      top: delta,
+      behavior,
+    });
   });
 }
 
@@ -487,6 +515,14 @@ function closeProfileModal() {
 }
 
 function showPage(view) {
+  if (view === "profile") {
+    revealJohnConversation();
+  }
+
+  if (view === "discover") {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
   pageViews.forEach((page) => {
     page.classList.toggle("active", page.dataset.pageView === view);
   });
@@ -513,9 +549,18 @@ function showPage(view) {
   if (activeContext && !activeContext.chatStarted) {
     startEmptyChatIntro(activeContext);
     updateRotatingPlaceholder(activeContext);
+  } else if (activeContext?.chatStarted) {
+    activeContext.textarea.placeholder = "Write a message...";
+    scrollLatestMessageToComposer(activeContext, { behavior: "auto", clearance: 10 });
   }
 
   updateProfileMiniJump();
+}
+
+function revealJohnConversation() {
+  johnConversationRows.forEach((row) => {
+    row.hidden = false;
+  });
 }
 
 showPage("discover");

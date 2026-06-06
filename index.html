@@ -51,7 +51,7 @@
       </nav>
       <h2 class="sidebar-section-title">Conversations</h2>
       <div class="conversation-list">
-        <button class="conversation-item active" type="button" data-nav-view="profile">
+        <button class="conversation-item active" type="button" data-nav-view="profile" data-reveal-on-john hidden>
           <span class="avatar-wrap">
             <img src="assets/johnzimmer-profile.png" alt="" />
             <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
@@ -148,7 +148,7 @@
           </span>
         </button>
 
-        <button class="conversation-item" type="button">
+        <button class="conversation-item" type="button" data-john-conversation hidden>
           <span class="avatar-wrap">
             <img src="assets/johnzimmer-profile.png" alt="" />
             <span class="mini-mark" aria-hidden="true"><svg viewBox="0 0 36 36"><path d="M29.012 11.186c.46-.024.957-.336.957-.983V8.53c-.02-.452-.335-1.333-1.438-1.239-4.23.362-9.157 2.912-10.553 8.145-1.396-5.233-6.323-7.783-10.553-8.145-1.104-.094-1.419.787-1.438 1.239v1.673c0 .647.498.96.957.983.46.023 1.426-.03 4.61.252 3.186.281 4.708 3.05 5.028 5.657-3.386-.267-7.397-.739-8.668-.994-1.321-.265-1.55.595-1.529 1.41v.985c-.02.815.208 1.675 1.529 1.41 1.27-.256 5.282-.727 8.668-.994-.32 2.607-1.842 5.376-5.027 5.657-3.185.282-4.151.229-4.61.252s-.958.336-.958.982v1.674c.02.452.334 1.333 1.438 1.239 4.23-.362 9.157-2.913 10.553-8.146 1.396 5.233 6.323 7.784 10.553 8.146 1.103.094 1.418-.787 1.438-1.24v-1.673c0-.646-.498-.959-.957-.982-.46-.024-1.426.03-4.611-.252-3.185-.281-4.707-3.05-5.027-5.657 3.386.267 7.397.738 8.668.994 1.321.265 1.55-.595 1.528-1.41v-.985c.022-.815-.207-1.675-1.528-1.41-1.27.255-5.282.727-8.668.994.32-2.607 1.842-5.376 5.027-5.657 3.185-.282 4.151-.229 4.61-.252"></path></svg></span>
@@ -221,20 +221,7 @@
       <button class="profile-mini-jump" type="button" data-profile-jump hidden>
         <img src="assets/johnzimmer-profile.png" alt="" />
         <span class="profile-mini-label">
-          <span>John Zimmer</span>
-          <svg
-            aria-hidden="true"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M11 5 6 9H3v6h3l5 4V5Z" />
-            <path d="m19 9-4 4" />
-            <path d="m15 9 4 4" />
-          </svg>
+          <span data-profile-mini-name>John Zimmer</span>
         </span>
       </button>
 
@@ -493,7 +480,7 @@
         </div>
       </section>
 
-      <section class="profile-card page-view intro-sequence intro-pending" aria-labelledby="ben-profile-title" data-page-view="ben-profile" data-chat-profile data-profile-key="ben" data-profile-name="Ben Greenfield" data-profile-image="assets/BenGreen.jpg">
+      <section class="profile-card page-view intro-sequence chat-started" aria-labelledby="ben-profile-title" data-page-view="ben-profile" data-chat-profile data-profile-key="ben" data-profile-name="Ben Greenfield" data-profile-image="assets/BenGreen.jpg">
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="profile-shadow" aria-hidden="true"></div>
 
@@ -555,10 +542,66 @@
           </button>
         </div>
 
-        <div class="chat-thread" data-chat-thread aria-live="polite"></div>
+        <div class="chat-thread" data-chat-thread aria-live="polite">
+          <div class="chat-date"><strong>Today</strong> 10:14 AM</div>
+          <div class="message-row user">
+            <div class="message-bubble">I’m working on a story about wellness advice becoming overwhelming. Where should I start?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">Start by separating advice that helps ordinary people live better from advice that mainly sells identity, fear, or optimization for its own sake.</div>
+          </div>
+          <div class="message-row user">
+            <div class="message-bubble">What’s a good way to define “useful” wellness advice?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">Useful advice is repeatable, affordable, and grounded in the basics: sleep, movement, food quality, stress, sunlight, relationships, and enough recovery.</div>
+          </div>
+          <div class="message-row user">
+            <div class="message-bubble">How do you think about gut health without making it sound like a miracle cure?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">I’d frame gut health as one signal in a larger system. Digestion, energy, mood, skin, and immune resilience can all matter, but no single supplement explains everything.</div>
+          </div>
+          <div class="message-row user">
+            <div class="message-bubble">What questions should I ask people who are selling protocols?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">Ask what someone can do if they have no wearable, no subscription, no lab testing, and only thirty minutes a day. That reveals whether the protocol has a practical core.</div>
+          </div>
+          <div class="message-row user">
+            <div class="message-bubble">What’s the line between high performance and anxiety disguised as discipline?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">Performance should create capacity. If the routine makes someone more brittle, socially isolated, or afraid of normal life, it may be control wearing the language of health.</div>
+          </div>
+          <div class="message-row user">
+            <div class="message-bubble">That’s useful. What would you say to readers who feel behind?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">Most people do not need a full reinvention. They need one or two boring things done consistently enough that their body starts trusting the pattern.</div>
+          </div>
+          <div class="message-row user">
+            <div class="message-bubble">Which boring things would you pick first?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">A consistent wake time, a walk after meals, protein at breakfast, less late-night light, and a short strength routine would outperform most complicated stacks for many people.</div>
+          </div>
+          <div class="message-row user">
+            <div class="message-bubble">How should I write about supplements responsibly?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">Treat supplements as context-dependent tools, not universal answers. Ask what deficiency, goal, risk, interaction, and lifestyle foundation they are supposed to address.</div>
+          </div>
+          <div class="message-row user">
+            <div class="message-bubble">What’s a strong closing idea for the piece?</div>
+          </div>
+          <div class="message-row delphi">
+            <div class="message-bubble">Health should make daily life feel more available, not more fragile. The best advice gives people agency without convincing them they are broken.</div>
+          </div>
+        </div>
 
         <div class="inline-composer" aria-label="Message Ben">
-          <textarea aria-label="Message Ben" rows="2" placeholder="Could you share some tips to unlock better gut health?"></textarea>
+          <textarea aria-label="Message Ben" rows="2" placeholder="Write a message..."></textarea>
           <span class="tab-hint" aria-hidden="true">TAB</span>
           <div class="composer-actions">
             <button class="add-button" type="button" aria-label="Attach file">
@@ -661,8 +704,7 @@
         <div class="about-header">
           <h1 id="about-title">About You</h1>
           <p>
-            This is the shared context Maya’s Delphis use to understand who she is,
-            what she cares about, and how to make each conversation feel more useful.
+            This is shared context for all Delphis. Its a place to define who you are, what matters to you, and how conversations should be personalized. You can edit or remove it anytime, and it stays private to your account.
           </p>
         </div>
 
