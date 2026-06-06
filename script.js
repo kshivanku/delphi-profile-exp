@@ -2,7 +2,6 @@ const textarea = document.querySelector("textarea");
 const composer = document.querySelector(".inline-composer");
 const callButton = document.querySelector(".call-button");
 const sendButton = document.querySelector(".send-button");
-const switcherButtons = document.querySelectorAll("[data-variant]");
 const navViewButtons = document.querySelectorAll("[data-nav-view]");
 const pageViews = document.querySelectorAll("[data-page-view]");
 const signalCards = document.querySelectorAll("[data-signal]");
@@ -19,32 +18,12 @@ const profileModalBody = document.querySelector("[data-modal-body]");
 const profileModalFollowTitle = document.querySelector("[data-modal-follow-title]");
 const profileModalCloseButtons = document.querySelectorAll(".modal-close, .modal-backdrop");
 
-const variants = {
-  current: {
-    placeholders: [
-      "How would you evaluate my city mobility idea?",
-      "What should I ask you about public trust?",
-      "How do mission-led companies explain themselves well?",
-      "What would you tell a journalist covering urban mobility?",
-    ],
-  },
-  common: {
-    placeholders: [
-      "Where do my interests overlap most with your work?",
-      "How should audience editors think about founder stories?",
-      "What makes a company’s story feel credible?",
-      "How do cities, media, and trust connect?",
-    ],
-  },
-  trends: {
-    placeholders: [
-      "What are people asking you about most right now?",
-      "What recent coverage should I understand before we talk?",
-      "What topic around cities is getting attention lately?",
-      "What question should I ask based on your latest work?",
-    ],
-  },
-};
+const defaultPlaceholders = [
+  "How would you evaluate my city mobility idea?",
+  "What should I ask you about public trust?",
+  "How do mission-led companies explain themselves well?",
+  "What would you tell a journalist covering urban mobility?",
+];
 
 const signalStarters = {
   podcast: [
@@ -109,18 +88,11 @@ const profileDescriptions = {
   },
 };
 
-let currentVariant = "current";
-let activeSuggestion = variants.current.placeholders[0];
+let activeSuggestion = defaultPlaceholders[0];
 let placeholderIndex = 0;
 let placeholderTimer;
 let placeholderTypingTimer;
 let isStarterCardOpen = false;
-
-switcherButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    applyVariant(button.dataset.variant);
-  });
-});
 
 navViewButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -192,18 +164,6 @@ textarea.addEventListener("input", () => {
   updateComposerState();
   updateRotatingPlaceholder();
 });
-
-function applyVariant(key) {
-  const variant = variants[key];
-  currentVariant = key;
-  placeholderIndex = 0;
-
-  switcherButtons.forEach((button) => {
-    button.classList.toggle("active", button.dataset.variant === key);
-  });
-
-  updateRotatingPlaceholder();
-}
 
 function toggleStarterCard(signal) {
   const selectedCard = [...signalCards].find((button) => button.dataset.signal === signal);
@@ -305,7 +265,7 @@ function acceptSuggestion(suggestion) {
 }
 
 function getCurrentPlaceholders() {
-  return variants[currentVariant].placeholders;
+  return defaultPlaceholders;
 }
 
 function updateRotatingPlaceholder() {
@@ -406,6 +366,6 @@ function showPage(view) {
   });
 }
 
-applyVariant("current");
+updateRotatingPlaceholder();
 showPage("profile");
 updateComposerState();
