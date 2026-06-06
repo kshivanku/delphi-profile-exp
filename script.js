@@ -2,6 +2,16 @@ const profileMiniJump = document.querySelector("[data-profile-jump]");
 const brandMark = document.querySelector(".brand-mark");
 const mobileNavBackdrop = document.querySelector(".mobile-nav-backdrop");
 const johnConversationRows = document.querySelectorAll("[data-reveal-on-john]");
+const authConversationRows = document.querySelectorAll("[data-auth-conversation]");
+const accountToggle = document.querySelector("[data-account-toggle]");
+const accountAvatar = document.querySelector("[data-account-avatar]");
+const accountName = document.querySelector("[data-account-name]");
+const accountPlan = document.querySelector("[data-account-plan]");
+const accountCta = document.querySelector("[data-account-cta]");
+const accountChevron = document.querySelector("[data-account-chevron]");
+const contextDocument = document.querySelector(".context-document");
+const connectedSection = document.querySelector(".connected-section");
+const contextEmpty = document.querySelector("[data-context-empty]");
 const navViewButtons = document.querySelectorAll("[data-nav-view]");
 const pageViews = document.querySelectorAll("[data-page-view]");
 const profileModalButtons = document.querySelectorAll("[data-profile-modal]");
@@ -80,7 +90,12 @@ const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")
 });
 
 let activeContext = null;
+let isLoggedIn = true;
 const mobileNavQuery = window.matchMedia("(max-width: 760px)");
+const loggedInAvatar =
+  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=120&q=80";
+const guestAvatar =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='32' fill='%23eeeae4'/%3E%3Ccircle cx='60' cy='46' r='19' fill='%23938d86'/%3E%3Cpath d='M28 98c3.4-22 17-34 32-34s28.6 12 32 34' fill='%23938d86'/%3E%3C/svg%3E";
 
 function setMobileNavOpen(isOpen) {
   document.body.classList.toggle("mobile-nav-open", isOpen);
@@ -115,6 +130,75 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     setMobileNavOpen(false);
   }
+});
+
+function setAccountState(nextIsLoggedIn) {
+  isLoggedIn = nextIsLoggedIn;
+
+  if (isLoggedIn) {
+    if (accountAvatar) {
+      accountAvatar.src = loggedInAvatar;
+    }
+    if (accountName) {
+      accountName.textContent = "Maya Patel";
+    }
+    if (accountPlan) {
+      accountPlan.hidden = false;
+      accountPlan.textContent = "Free";
+    }
+    if (accountCta) {
+      accountCta.hidden = true;
+    }
+    if (accountChevron) {
+      accountChevron.hidden = false;
+    }
+    authConversationRows.forEach((row) => {
+      row.hidden = false;
+    });
+    if (contextDocument) {
+      contextDocument.hidden = false;
+    }
+    if (connectedSection) {
+      connectedSection.hidden = false;
+    }
+    if (contextEmpty) {
+      contextEmpty.hidden = true;
+    }
+    return;
+  }
+
+  revealJohnConversation();
+  if (accountAvatar) {
+    accountAvatar.src = guestAvatar;
+  }
+  if (accountName) {
+    accountName.textContent = "Guest";
+  }
+  if (accountPlan) {
+    accountPlan.hidden = true;
+  }
+  if (accountCta) {
+    accountCta.hidden = false;
+  }
+  if (accountChevron) {
+    accountChevron.hidden = true;
+  }
+  authConversationRows.forEach((row) => {
+    row.hidden = true;
+  });
+  if (contextDocument) {
+    contextDocument.hidden = true;
+  }
+  if (connectedSection) {
+    connectedSection.hidden = true;
+  }
+  if (contextEmpty) {
+    contextEmpty.hidden = false;
+  }
+}
+
+accountToggle?.addEventListener("click", () => {
+  setAccountState(!isLoggedIn);
 });
 
 chatContexts.forEach((context) => {
