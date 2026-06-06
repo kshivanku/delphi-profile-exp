@@ -18,11 +18,13 @@ const guestProfileCopy = document.querySelectorAll("[data-guest-profile-copy]");
 const navViewButtons = document.querySelectorAll("[data-nav-view]");
 const pageViews = document.querySelectorAll("[data-page-view]");
 const profileModalButtons = document.querySelectorAll("[data-profile-modal]");
+const privacyModalButtons = document.querySelectorAll("[data-privacy-modal]");
 const profileDialog = document.querySelector("[data-profile-dialog]");
 const profileModalTitle = document.querySelector("[data-modal-title]");
 const profileModalKicker = document.querySelector("[data-modal-kicker]");
 const profileModalBody = document.querySelector("[data-modal-body]");
 const profileModalFollowTitle = document.querySelector("[data-modal-follow-title]");
+const profileModalFollow = document.querySelector(".modal-follow");
 const profileModalCloseButtons = document.querySelectorAll(".modal-close, .modal-backdrop");
 const guestSpotifyMarkup = guestSpotify?.innerHTML || "";
 
@@ -259,6 +261,10 @@ profileModalButtons.forEach((button) => {
   });
 });
 
+privacyModalButtons.forEach((button) => {
+  button.addEventListener("click", openPrivacyModal);
+});
+
 profileModalCloseButtons.forEach((button) => {
   button.addEventListener("click", closeProfileModal);
 });
@@ -318,6 +324,8 @@ function ensureChatStarted(context) {
   context.chatStarted = true;
   updateProfileMiniJump();
 
+  context.chatThread.append(createChatPrivacyNote(context));
+
   const dateNode = document.createElement("div");
   dateNode.className = "chat-date";
   dateNode.innerHTML = `<strong>Today</strong> ${formatChatTime(new Date())}`;
@@ -344,6 +352,37 @@ function addChatMessage(context, message, sender) {
   context.chatThread.append(row);
   scrollMessageAboveComposer(context, row);
   updateProfileMiniJump();
+}
+
+function createChatPrivacyNote(context) {
+  const note = document.createElement("p");
+  note.className = "privacy-note chat-privacy-note";
+
+  const lock = document.createElement("span");
+  lock.className = "privacy-lock";
+  lock.setAttribute("aria-hidden", "true");
+  lock.innerHTML = `
+    <svg viewBox="0 0 24 24">
+      <rect x="6" y="10" width="12" height="10" rx="2"></rect>
+      <path d="M8 10V8a4 4 0 0 1 8 0v2"></path>
+    </svg>
+  `;
+
+  const expertName = context.name || "the expert";
+  const strong = document.createElement("strong");
+  strong.textContent = "Private to you.";
+
+  const text = document.createTextNode(
+    ` ${expertName} won’t see this chat. Only aggregate insights are shared. `,
+  );
+
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = "How it works";
+  button.addEventListener("click", openPrivacyModal);
+
+  note.append(lock, strong, text, button);
+  return note;
 }
 
 function addIntroChatMessage(context) {
@@ -607,9 +646,34 @@ function openProfileModal(profile) {
   profileModalKicker.textContent = description.kicker;
   profileModalTitle.textContent = description.title;
   profileModalFollowTitle.textContent = `Follow ${description.title.split(" ")[0]} for more`;
+  if (profileModalFollow) {
+    profileModalFollow.hidden = false;
+  }
   profileModalBody.innerHTML = "";
 
   description.paragraphs.forEach((paragraph) => {
+    const node = document.createElement("p");
+    node.textContent = paragraph;
+    profileModalBody.append(node);
+  });
+
+  profileDialog.hidden = false;
+  document.body.classList.add("modal-open");
+}
+
+function openPrivacyModal() {
+  profileModalKicker.textContent = "How it works";
+  profileModalTitle.textContent = "Your chats are private";
+  if (profileModalFollow) {
+    profileModalFollow.hidden = true;
+  }
+  profileModalBody.innerHTML = "";
+
+  [
+    "You are chatting with a Delphi trained on a human expert’s knowledge, not messaging the human expert directly.",
+    "Your individual conversations are private to your account. The expert will not see who asked what, or read your specific chat.",
+    "Experts may see aggregate themes, like which topics people ask about most, so they can improve their Delphi without identifying individual users.",
+  ].forEach((paragraph) => {
     const node = document.createElement("p");
     node.textContent = paragraph;
     profileModalBody.append(node);
