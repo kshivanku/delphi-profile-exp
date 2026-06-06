@@ -314,9 +314,6 @@ function ensureChatStarted(context) {
     "intro-controls-ready",
   );
   clearIntroStageTimers(context);
-  if (context.key === "john") {
-    stopGuestSpotify();
-  }
   context.textarea.placeholder = "Write a message...";
   context.chatStarted = true;
   updateProfileMiniJump();
@@ -325,6 +322,10 @@ function ensureChatStarted(context) {
   dateNode.className = "chat-date";
   dateNode.innerHTML = `<strong>Today</strong> ${formatChatTime(new Date())}`;
   context.chatThread.append(dateNode);
+  addIntroChatMessage(context);
+  if (context.key === "john") {
+    stopGuestSpotify();
+  }
 }
 
 function addChatMessage(context, message, sender) {
@@ -343,6 +344,45 @@ function addChatMessage(context, message, sender) {
   context.chatThread.append(row);
   scrollMessageAboveComposer(context, row);
   updateProfileMiniJump();
+}
+
+function addIntroChatMessage(context) {
+  const introText = getActiveIntroText(context);
+
+  if (!introText && !(context.key === "john" && !isLoggedIn && guestSpotifyMarkup)) {
+    return;
+  }
+
+  const row = document.createElement("div");
+  row.className = "message-row delphi intro-message";
+
+  const bubble = document.createElement("div");
+  bubble.className = "message-bubble";
+
+  if (context.key === "john" && !isLoggedIn && guestSpotifyMarkup) {
+    const videoWrap = document.createElement("div");
+    videoWrap.className = "message-video";
+    videoWrap.innerHTML = guestSpotifyMarkup;
+    bubble.append(videoWrap);
+  }
+
+  if (introText) {
+    const textNode = document.createElement("p");
+    textNode.textContent = introText;
+    bubble.append(textNode);
+  }
+
+  row.append(bubble);
+  context.chatThread.append(row);
+}
+
+function getActiveIntroText(context) {
+  syncActiveIntroCopy(context);
+  const source = Array.from(context.profile.querySelectorAll(".starter-panel .bio")).find(
+    (node) => !node.hidden,
+  );
+
+  return source?.textContent.replace(/\s+/g, " ").trim() || "";
 }
 
 function updateProfileMiniJump() {

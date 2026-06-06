@@ -1390,6 +1390,30 @@ h2 {
   background: #f1f0ee;
 }
 
+.intro-message .message-bubble {
+  width: min(100%, 520px);
+  max-width: min(86%, 560px);
+}
+
+.intro-message .message-bubble p {
+  margin: 0;
+}
+
+.message-video {
+  overflow: hidden;
+  width: 100%;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+.message-video iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 496 / 279;
+  height: auto;
+  border: 0;
+}
+
 .inline-composer {
   position: fixed;
   right: 24px;
