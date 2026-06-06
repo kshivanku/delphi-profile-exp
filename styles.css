@@ -2094,10 +2094,10 @@ textarea::placeholder {
   }
 
   .profile-share {
-    position: fixed;
-    top: 74px;
-    right: 20px;
-    z-index: 31;
+    position: absolute;
+    top: 12px;
+    right: 0;
+    z-index: 5;
     height: 32px;
     padding: 0 11px;
     font-size: 13px;
