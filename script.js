@@ -25,21 +25,6 @@ const profileModalBody = document.querySelector("[data-modal-body]");
 const profileModalFollowTitle = document.querySelector("[data-modal-follow-title]");
 const profileModalCloseButtons = document.querySelectorAll(".modal-close, .modal-backdrop");
 
-const defaultPlaceholders = {
-  john: [
-    "How would you evaluate my city mobility idea?",
-    "What should I ask you about public trust?",
-    "How do mission-led companies explain themselves well?",
-    "What would you tell a journalist covering urban mobility?",
-  ],
-  ben: [
-    "Could you share some tips to unlock better gut health?",
-    "How do I sort useful wellness advice from hype?",
-    "What recovery habit has the biggest impact?",
-    "What should a journalist ask about performance culture?",
-  ],
-};
-
 const profileDescriptions = {
   john: {
     kicker: "About John",
@@ -87,10 +72,6 @@ const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")
     introFullText: typedIntro?.textContent || "",
     authIntroFullText: typedIntro?.textContent || "",
     guestIntroFullText: guestTypedIntro?.textContent || "",
-    activeSuggestion: defaultPlaceholders[key]?.[0] || "",
-    placeholderIndex: 0,
-    placeholderTimer: null,
-    placeholderTypingTimer: null,
     introTypingTimer: null,
     chatStarted: profile.classList.contains("chat-started") || hasConversationHistory,
     introAnimationStarted: profile.classList.contains("chat-started") || hasConversationHistory,
@@ -231,12 +212,6 @@ accountToggle?.addEventListener("click", () => {
 
 chatContexts.forEach((context) => {
   context.textarea?.addEventListener("keydown", (event) => {
-    if (event.key === "Tab" && context.activeSuggestion && !context.chatStarted) {
-      event.preventDefault();
-      acceptSuggestion(context, context.activeSuggestion);
-      return;
-    }
-
     if (event.key !== "Enter" || event.shiftKey) {
       return;
     }
@@ -248,7 +223,6 @@ chatContexts.forEach((context) => {
   context.textarea?.addEventListener("input", () => {
     fitTextarea(context);
     updateComposerState(context);
-    updateRotatingPlaceholder(context);
   });
 
   context.callButton?.addEventListener("click", () => {
@@ -301,28 +275,6 @@ function updateComposerState(context) {
   context.composer.classList.toggle("has-text", context.textarea.value.trim().length > 0);
 }
 
-function setActiveSuggestion(context, suggestion, options = {}) {
-  const { animate = true } = options;
-  context.activeSuggestion = suggestion;
-
-  if (!animate || context.textarea.value.trim().length > 0) {
-    stopPlaceholderTyping(context);
-    context.textarea.placeholder = suggestion;
-    return;
-  }
-
-  typePlaceholder(context, suggestion);
-}
-
-function acceptSuggestion(context, suggestion) {
-  context.textarea.value = suggestion;
-  stopPlaceholderTyping(context);
-  fitTextarea(context);
-  updateComposerState(context);
-  context.textarea.focus();
-  updateRotatingPlaceholder(context);
-}
-
 function sendComposerMessage(context) {
   sendMessage(context, context.textarea.value);
 }
@@ -337,9 +289,9 @@ function sendMessage(context, message) {
   ensureChatStarted(context);
   addChatMessage(context, trimmedMessage, "user");
   context.textarea.value = "";
+  context.textarea.placeholder = "Write a message...";
   fitTextarea(context);
   updateComposerState(context);
-  updateRotatingPlaceholder(context);
 
   window.setTimeout(() => {
     addChatMessage(context, getDelphiReply(context, trimmedMessage), "delphi");
@@ -359,9 +311,6 @@ function ensureChatStarted(context) {
     "intro-controls-ready",
   );
   stopIntroTyping(context);
-  stopPlaceholderRotation(context);
-  stopPlaceholderTyping(context);
-  context.activeSuggestion = "";
   context.textarea.placeholder = "Write a message...";
   context.chatStarted = true;
   updateProfileMiniJump();
@@ -512,70 +461,6 @@ function getDelphiReply(context, message) {
   return "That’s a good starting point. I’d frame it around what changed for people, what stayed hard, and where transportation choices shape how much trust a city earns from daily life.";
 }
 
-function getCurrentPlaceholders(context) {
-  return defaultPlaceholders[context.key] || defaultPlaceholders.john;
-}
-
-function updateRotatingPlaceholder(context) {
-  if (context.chatStarted) {
-    stopPlaceholderRotation(context);
-    stopPlaceholderTyping(context);
-    context.textarea.placeholder = "Write a message...";
-    return;
-  }
-
-  if (context.textarea.value.trim().length > 0) {
-    stopPlaceholderRotation(context);
-    return;
-  }
-
-  const placeholders = getCurrentPlaceholders(context);
-  setActiveSuggestion(context, placeholders[context.placeholderIndex % placeholders.length]);
-  startPlaceholderRotation(context);
-}
-
-function startPlaceholderRotation(context) {
-  stopPlaceholderRotation(context);
-  context.placeholderTimer = window.setInterval(() => {
-    if (context.textarea.value.trim().length > 0) {
-      stopPlaceholderRotation(context);
-      return;
-    }
-
-    const placeholders = getCurrentPlaceholders(context);
-    context.placeholderIndex = (context.placeholderIndex + 1) % placeholders.length;
-    setActiveSuggestion(context, placeholders[context.placeholderIndex]);
-  }, 3200);
-}
-
-function stopPlaceholderRotation(context) {
-  window.clearInterval(context.placeholderTimer);
-}
-
-function typePlaceholder(context, suggestion) {
-  stopPlaceholderTyping(context);
-  context.textarea.placeholder = "";
-
-  let index = 0;
-  context.placeholderTypingTimer = window.setInterval(() => {
-    if (context.textarea.value.trim().length > 0) {
-      stopPlaceholderTyping(context);
-      return;
-    }
-
-    index += 1;
-    context.textarea.placeholder = suggestion.slice(0, index);
-
-    if (index >= suggestion.length) {
-      stopPlaceholderTyping(context);
-    }
-  }, 18);
-}
-
-function stopPlaceholderTyping(context) {
-  window.clearInterval(context.placeholderTypingTimer);
-}
-
 function startEmptyChatIntro(context) {
   syncActiveIntroCopy(context);
 
@@ -715,16 +600,11 @@ function showPage(view) {
     }
   });
 
-  chatContexts.forEach((context) => {
-    stopPlaceholderRotation(context);
-    stopPlaceholderTyping(context);
-  });
-
   activeContext = chatContexts.find((context) => context.view === view) || null;
 
   if (activeContext && !activeContext.chatStarted) {
     startEmptyChatIntro(activeContext);
-    updateRotatingPlaceholder(activeContext);
+    activeContext.textarea.placeholder = "Write a message...";
   } else if (activeContext?.chatStarted) {
     activeContext.textarea.placeholder = "Write a message...";
     scrollLatestMessageToComposer(activeContext, { behavior: "auto", clearance: 10 });
@@ -740,5 +620,10 @@ function revealJohnConversation() {
 }
 
 showPage("discover");
-chatContexts.forEach(updateComposerState);
+chatContexts.forEach((context) => {
+  if (context.textarea) {
+    context.textarea.placeholder = "Write a message...";
+  }
+  updateComposerState(context);
+});
 window.addEventListener("scroll", updateProfileMiniJump, { passive: true });

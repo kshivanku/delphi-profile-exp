@@ -1001,6 +1001,7 @@ a {
 }
 
 .title-block,
+.starter-panel,
 .bio {
   position: relative;
   z-index: 1;
@@ -1095,6 +1096,19 @@ h1 {
   border-radius: 12px;
 }
 
+.starter-panel {
+  width: min(100%, 720px);
+  margin: 34px auto 0;
+  padding: 22px;
+  border: 1px solid rgba(30, 28, 25, 0.1);
+  border-radius: 24px;
+  background: rgba(250, 249, 247, 0.86);
+}
+
+.starter-panel .guest-spotify {
+  margin: 0 auto 20px;
+}
+
 .bio {
   max-width: 640px;
   margin: 32px auto 0;
@@ -1106,6 +1120,14 @@ h1 {
 
 .bio p {
   margin: 0 0 18px;
+}
+
+.starter-panel .bio {
+  margin-top: 0;
+}
+
+.starter-panel .bio p {
+  margin-bottom: 0;
 }
 
 .context-cue {
@@ -1127,6 +1149,7 @@ h1 {
 
 .intro-sequence:not(.chat-started) .profile-image-wrap,
 .intro-sequence:not(.chat-started) .title-block,
+.intro-sequence:not(.chat-started) .starter-panel,
 .intro-sequence:not(.chat-started) .bio,
 .intro-sequence:not(.chat-started) .question-suggestions,
 .intro-sequence:not(.chat-started) > .inline-composer {
@@ -1140,6 +1163,7 @@ h1 {
 }
 
 .intro-pending:not(.chat-started) .bio,
+.intro-pending:not(.chat-started) .starter-panel,
 .intro-pending:not(.chat-started) .question-suggestions,
 .intro-pending:not(.chat-started) > .inline-composer {
   opacity: 0;
@@ -1153,6 +1177,13 @@ h1 {
   transform: translateY(0);
 }
 
+.intro-profile-ready:not(.chat-started) .starter-panel {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
+.intro-typing:not(.chat-started) .starter-panel,
 .intro-typing:not(.chat-started) .bio {
   opacity: 1;
   transform: translateY(0);
@@ -1166,14 +1197,14 @@ h1 {
 }
 
 .intro-controls-ready:not(.chat-started) .question-suggestions,
+.intro-controls-ready:not(.chat-started) .starter-panel,
 .intro-controls-ready:not(.chat-started) > .inline-composer {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0);
 }
 
-.profile-card.chat-started .bio,
-.profile-card.chat-started .question-suggestions {
+.profile-card.chat-started .starter-panel {
   display: none;
 }
 
@@ -1241,16 +1272,21 @@ h2 {
   margin: 28px auto 0;
 }
 
+.starter-panel .question-suggestions {
+  width: 100%;
+  margin-top: 20px;
+}
+
 .question-suggestion {
   position: relative;
-  min-height: 52px;
-  padding: 10px 50px 10px 14px;
-  border: 1px solid rgba(30, 28, 25, 0.1);
+  min-height: 46px;
+  padding: 9px 48px 9px 13px;
+  border: 1px solid rgba(30, 28, 25, 0.08);
   border-radius: 15px;
   color: #302d29;
-  background: #f8f7f5;
+  background: rgba(255, 255, 255, 0.76);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 450;
   line-height: 1.28;
   text-align: left;
   cursor: pointer;
@@ -1259,7 +1295,7 @@ h2 {
 
 .question-suggestion:hover {
   border-color: rgba(30, 28, 25, 0.16);
-  background: #f1f0ed;
+  background: #fff;
 }
 
 .question-suggestion::after {
@@ -1389,36 +1425,6 @@ textarea {
 textarea::placeholder {
   color: #807d77;
   opacity: 1;
-}
-
-.tab-hint {
-  position: absolute;
-  top: 13px;
-  right: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 36px;
-  height: 24px;
-  border: 1px solid rgba(30, 28, 25, 0.075);
-  border-radius: 9px;
-  color: #bbb6af;
-  background: rgba(255, 255, 255, 0.45);
-  box-shadow: none;
-  font-size: 11px;
-  font-weight: 650;
-  letter-spacing: 0.03em;
-  pointer-events: none;
-  transition: opacity 160ms ease, transform 160ms ease;
-}
-
-.inline-composer.has-text .tab-hint {
-  opacity: 0;
-  transform: translateY(-2px);
-}
-
-.profile-card.chat-started .tab-hint {
-  display: none;
 }
 
 .composer-actions {
@@ -2258,10 +2264,24 @@ textarea::placeholder {
     line-height: 1.52;
   }
 
+  .starter-panel {
+    margin-top: 28px;
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .starter-panel .guest-spotify {
+    margin-bottom: 16px;
+  }
+
   .question-suggestions {
     grid-template-columns: 1fr;
     gap: 8px;
     margin-top: 24px;
+  }
+
+  .starter-panel .question-suggestions {
+    margin-top: 16px;
   }
 
   .question-suggestion {
@@ -2333,15 +2353,6 @@ textarea::placeholder {
     font-size: 14px;
     line-height: 1.2;
     overflow: hidden;
-  }
-
-  .tab-hint {
-    top: 10px;
-    right: 12px;
-    min-width: 30px;
-    height: 22px;
-    border-radius: 8px;
-    font-size: 10px;
   }
 
   .composer-actions {
