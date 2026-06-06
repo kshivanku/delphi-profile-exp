@@ -66,7 +66,7 @@ const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")
     chatThread,
     questionSuggestions: profile.querySelectorAll(".question-suggestion"),
     typedIntro,
-    introFullText: typedIntro?.textContent.trim() || "",
+    introFullText: typedIntro?.textContent || "",
     activeSuggestion: defaultPlaceholders[key]?.[0] || "",
     placeholderIndex: 0,
     placeholderTimer: null,

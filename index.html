@@ -20,10 +20,13 @@
           />
         </svg>
       </a>
-
     </header>
     <div class="sidebar-divider" aria-hidden="true"></div>
     <aside class="conversation-sidebar" aria-label="Recent conversations">
+      <nav class="global-tabs" aria-label="Workspace tabs">
+        <button class="active" type="button">Me</button>
+        <button type="button" aria-disabled="true">My Delphi</button>
+      </nav>
       <nav class="sidebar-actions" aria-label="Main sections">
         <button class="sidebar-action" type="button" data-nav-view="discover">
           <span class="sidebar-icon plus-icon" aria-hidden="true">+</span>
@@ -38,15 +41,7 @@
               <path d="M9.5 16h6"></path>
             </svg>
           </span>
-          <span>About You</span>
-        </button>
-        <button class="sidebar-action" type="button">
-          <span class="sidebar-icon delphi-action" aria-hidden="true">
-            <svg viewBox="0 0 24 24">
-              <path d="M18.7 7.6c.3 0 .6-.2.6-.6V6c0-.3-.2-.8-.9-.8-2.8.2-5.9 1.9-6.8 5.2-.9-3.3-4-5-6.8-5.2-.7-.1-.9.5-.9.8v1c0 .4.3.6.6.6s.9 0 3 .2c2 .2 3 1.9 3.2 3.6-2.2-.2-4.8-.5-5.6-.6-.9-.2-1 .4-1 1v.6c0 .6.1 1.2 1 1 .8-.2 3.4-.5 5.6-.6-.2 1.7-1.2 3.4-3.2 3.6-2.1.2-2.7.1-3 .2-.3 0-.6.2-.6.6v1c0 .3.2.8.9.8 2.8-.2 5.9-1.9 6.8-5.2.9 3.3 4 5 6.8 5.2.7.1.9-.5.9-.8v-1c0-.4-.3-.6-.6-.6s-.9 0-3-.2c-2-.2-3-1.9-3.2-3.6 2.2.2 4.8.5 5.6.6.9.2 1-.4 1-1v-.6c0-.6-.1-1.2-1-1-.8.2-3.4.5-5.6.6.2-1.7 1.2-3.4 3.2-3.6 2.1-.2 2.7-.1 3-.2Z"></path>
-            </svg>
-          </span>
-          <span>Your Delphi</span>
+          <span>My Context</span>
         </button>
       </nav>
       <h2 class="sidebar-section-title">Conversations</h2>
@@ -231,22 +226,27 @@
             <h1 id="discover-title">Discover</h1>
             <p>Talk to trusted minds with real experience</p>
           </div>
-          <label class="discover-search">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <circle cx="11" cy="11" r="7" />
-              <path d="m20 20-3.5-3.5" />
-            </svg>
-            <input type="search" placeholder="Search minds..." aria-label="Search minds" />
-          </label>
         </div>
+
+        <label class="discover-search">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="7" />
+            <path d="m20 20-3.5-3.5" />
+          </svg>
+          <input
+            type="search"
+            placeholder="Ask a question or search for a name"
+            aria-label="Ask a question or search for a name"
+          />
+        </label>
 
         <div class="discover-filters" aria-label="Categories">
           <button class="active" type="button">All</button>
@@ -378,6 +378,22 @@
       </section>
 
       <section class="profile-card page-view active intro-sequence intro-pending" aria-labelledby="profile-title" data-page-view="profile" data-chat-profile data-profile-key="john" data-profile-name="John Zimmer" data-profile-image="assets/johnzimmer-profile.png">
+        <button class="profile-share" type="button" aria-label="Share John Zimmer">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
+            <path d="M12 16V4" />
+            <path d="m7 9 5-5 5 5" />
+          </svg>
+          <span>Share</span>
+        </button>
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="profile-shadow" aria-hidden="true"></div>
 
@@ -423,7 +439,7 @@
               />
               <strong>Maya,</strong>
             </span>
-            <span data-typed-intro>I’m John. It looks like you’re working on a story about how cities are changing after remote work. I can help think through transportation, public trust, and what actually changes commuter behavior.</span>
+            <span>I’m John. </span><button class="context-cue" type="button" data-nav-view="about">I see</button><span data-typed-intro> you’re working on a story about how cities are changing after remote work. I can help think through transportation, public trust, and what actually changes commuter behavior.</span>
           </p>
         </div>
 
@@ -481,6 +497,22 @@
       </section>
 
       <section class="profile-card page-view intro-sequence chat-started" aria-labelledby="ben-profile-title" data-page-view="ben-profile" data-chat-profile data-profile-key="ben" data-profile-name="Ben Greenfield" data-profile-image="assets/BenGreen.jpg">
+        <button class="profile-share" type="button" aria-label="Share Ben Greenfield">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
+            <path d="M12 16V4" />
+            <path d="m7 9 5-5 5 5" />
+          </svg>
+          <span>Share</span>
+        </button>
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="profile-shadow" aria-hidden="true"></div>
 
@@ -635,6 +667,22 @@
       </section>
 
       <section class="profile-card page-view" aria-labelledby="emily-profile-title" data-page-view="emily-profile">
+        <button class="profile-share" type="button" aria-label="Share Emily McDonald">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7" />
+            <path d="M12 16V4" />
+            <path d="m7 9 5-5 5 5" />
+          </svg>
+          <span>Share</span>
+        </button>
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="profile-shadow" aria-hidden="true"></div>
 
@@ -702,7 +750,7 @@
 
       <section class="about-view page-view" aria-labelledby="about-title" data-page-view="about">
         <div class="about-header">
-          <h1 id="about-title">About You</h1>
+          <h1 id="about-title">My Context</h1>
           <p>
             This is shared context for all Delphis. Its a place to define who you are, what matters to you, and how conversations should be personalized. You can edit or remove it anytime, and it stays private to your account.
           </p>
