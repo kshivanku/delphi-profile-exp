@@ -1,15 +1,6 @@
-const textarea = document.querySelector("textarea");
-const composer = document.querySelector(".inline-composer");
-const callButton = document.querySelector(".call-button");
-const sendButton = document.querySelector(".send-button");
+const profileMiniJump = document.querySelector("[data-profile-jump]");
 const navViewButtons = document.querySelectorAll("[data-nav-view]");
 const pageViews = document.querySelectorAll("[data-page-view]");
-const signalCards = document.querySelectorAll("[data-signal]");
-const starterCard = document.querySelector("[data-starter-card]");
-const starterSource = document.querySelector("[data-starter-source]");
-const starterTitle = document.querySelector("[data-starter-title]");
-const starterLink = document.querySelector("[data-starter-link]");
-const starterRows = document.querySelector("[data-starter-rows]");
 const profileModalButtons = document.querySelectorAll("[data-profile-modal]");
 const profileDialog = document.querySelector("[data-profile-dialog]");
 const profileModalTitle = document.querySelector("[data-modal-title]");
@@ -18,53 +9,19 @@ const profileModalBody = document.querySelector("[data-modal-body]");
 const profileModalFollowTitle = document.querySelector("[data-modal-follow-title]");
 const profileModalCloseButtons = document.querySelectorAll(".modal-close, .modal-backdrop");
 
-const defaultPlaceholders = [
-  "How would you evaluate my city mobility idea?",
-  "What should I ask you about public trust?",
-  "How do mission-led companies explain themselves well?",
-  "What would you tell a journalist covering urban mobility?",
-];
-
-const signalStarters = {
-  podcast: [
-    "What did you discuss on The Library of Minds that still feels unresolved?",
-    "What question from that conversation should more founders be asking?",
-    "How has your thinking changed since recording that episode?",
-    "What part of the podcast best explains your current work at Yes&?",
-    "What would you want a journalist to ask after listening to it?",
+const defaultPlaceholders = {
+  john: [
+    "How would you evaluate my city mobility idea?",
+    "What should I ask you about public trust?",
+    "How do mission-led companies explain themselves well?",
+    "What would you tell a journalist covering urban mobility?",
   ],
-  substack: [
-    "What was the main idea behind your recent piece?",
-    "How should founders think about mission without turning it into branding?",
-    "What did writing that article clarify for you?",
-    "Where do mission-led companies usually get the story wrong?",
-    "What should an audience editor pay attention to in that argument?",
+  ben: [
+    "Could you share some tips to unlock better gut health?",
+    "How do I sort useful wellness advice from hype?",
+    "What recovery habit has the biggest impact?",
+    "What should a journalist ask about performance culture?",
   ],
-  forbes: [
-    "What did the Forbes piece get right or miss about your work?",
-    "Why do you think this topic is getting attention now?",
-    "What should readers understand beyond the headline?",
-    "How does public coverage change how you explain your work?",
-    "What question would you ask if you were editing that profile?",
-  ],
-};
-
-const signalDetails = {
-  podcast: {
-    source: "Podcast",
-    title: "Library of Minds conversation with John Zimmer",
-    url: "#podcast",
-  },
-  substack: {
-    source: "Substack",
-    title: "Building mission-led companies",
-    url: "#substack",
-  },
-  forbes: {
-    source: "Forbes",
-    title: "Recent profile on John Zimmer and Yes&",
-    url: "#forbes",
-  },
 };
 
 const profileDescriptions = {
@@ -72,9 +29,9 @@ const profileDescriptions = {
     kicker: "About John",
     title: "John Zimmer",
     paragraphs: [
-      "John is the co-founder of Yes& and the former co-founder and President of Lyft.",
-      "At Yes&, he is building companies around the idea that business can create positive impact at scale. Before that, he helped turn Lyft into one of the defining transportation platforms of the last decade.",
-      "He has also appeared on The Library of Minds podcast, and his Delphi is especially useful for questions about cities, transportation, startup leadership, and mission-led company building.",
+      "I’m John, co-founder of Yes& and former co-founder and President of Lyft.",
+      "At Yes&, we’re building companies around the idea that business can make positive impact at scale. Before that, I helped build Lyft into one of the defining transportation platforms of the last decade.",
+      "I also recently appeared on The Library of Minds podcast. Ask me about cities, transportation, startup leadership, and building mission-led companies.",
     ],
   },
   ben: {
@@ -88,11 +45,36 @@ const profileDescriptions = {
   },
 };
 
-let activeSuggestion = defaultPlaceholders[0];
-let placeholderIndex = 0;
-let placeholderTimer;
-let placeholderTypingTimer;
-let isStarterCardOpen = false;
+const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")).map((profile) => {
+  const key = profile.dataset.profileKey;
+  const typedIntro = profile.querySelector("[data-typed-intro]");
+
+  return {
+    key,
+    profile,
+    view: profile.dataset.pageView,
+    name: profile.dataset.profileName,
+    image: profile.dataset.profileImage,
+    header: profile.querySelector(".title-block"),
+    textarea: profile.querySelector("textarea"),
+    composer: profile.querySelector(".inline-composer"),
+    callButton: profile.querySelector(".call-button"),
+    sendButton: profile.querySelector(".send-button"),
+    chatThread: profile.querySelector("[data-chat-thread]"),
+    questionSuggestions: profile.querySelectorAll(".question-suggestion"),
+    typedIntro,
+    introFullText: typedIntro?.textContent.trim() || "",
+    activeSuggestion: defaultPlaceholders[key]?.[0] || "",
+    placeholderIndex: 0,
+    placeholderTimer: null,
+    placeholderTypingTimer: null,
+    introTypingTimer: null,
+    chatStarted: false,
+    introAnimationStarted: false,
+  };
+});
+
+let activeContext = null;
 
 navViewButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -100,41 +82,50 @@ navViewButtons.forEach((button) => {
   });
 });
 
-textarea.addEventListener("keydown", (event) => {
-  if (event.key === "Tab" && activeSuggestion) {
+chatContexts.forEach((context) => {
+  context.textarea?.addEventListener("keydown", (event) => {
+    if (event.key === "Tab" && context.activeSuggestion && !context.chatStarted) {
+      event.preventDefault();
+      acceptSuggestion(context, context.activeSuggestion);
+      return;
+    }
+
+    if (event.key !== "Enter" || event.shiftKey) {
+      return;
+    }
+
     event.preventDefault();
-    acceptSuggestion(activeSuggestion);
-    return;
-  }
+    sendComposerMessage(context);
+  });
 
-  if (event.key !== "Enter" || event.shiftKey) {
-    return;
-  }
+  context.textarea?.addEventListener("input", () => {
+    fitTextarea(context);
+    updateComposerState(context);
+    updateRotatingPlaceholder(context);
+  });
 
-  event.preventDefault();
-  textarea.value = "";
-  fitTextarea();
-  updateComposerState();
-  updateRotatingPlaceholder();
+  context.callButton?.addEventListener("click", () => {
+    context.callButton.classList.toggle("active");
+    context.callButton.querySelector("span").textContent = context.callButton.classList.contains("active")
+      ? "Calling"
+      : "Call";
+  });
+
+  context.sendButton?.addEventListener("click", () => {
+    sendComposerMessage(context);
+  });
+
+  context.questionSuggestions.forEach((button) => {
+    button.addEventListener("click", () => {
+      sendMessage(context, button.textContent.trim());
+    });
+  });
 });
 
-callButton.addEventListener("click", () => {
-  callButton.classList.toggle("active");
-  callButton.querySelector("span").textContent = callButton.classList.contains("active")
-    ? "Calling"
-    : "Call";
-});
-
-sendButton.addEventListener("click", () => {
-  textarea.value = "";
-  fitTextarea();
-  updateComposerState();
-  updateRotatingPlaceholder();
-});
-
-signalCards.forEach((button) => {
-  button.addEventListener("click", () => {
-    toggleStarterCard(button.dataset.signal);
+profileMiniJump?.addEventListener("click", () => {
+  activeContext?.profile.scrollIntoView({
+    block: "start",
+    behavior: "smooth",
   });
 });
 
@@ -154,171 +145,318 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-function fitTextarea() {
-  textarea.style.height = "auto";
-  textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`;
+function fitTextarea(context) {
+  context.textarea.style.height = "auto";
+  context.textarea.style.height = `${Math.min(context.textarea.scrollHeight, 160)}px`;
 }
 
-textarea.addEventListener("input", () => {
-  fitTextarea();
-  updateComposerState();
-  updateRotatingPlaceholder();
-});
-
-function toggleStarterCard(signal) {
-  const selectedCard = [...signalCards].find((button) => button.dataset.signal === signal);
-  const isOpenSignal = selectedCard?.classList.contains("active") && !starterCard.hidden;
-
-  if (isOpenSignal) {
-    closeStarterCard();
-    return;
-  }
-
-  openStarterCard(signal);
+function updateComposerState(context) {
+  context.composer.classList.toggle("has-text", context.textarea.value.trim().length > 0);
 }
 
-function openStarterCard(signal) {
-  const starters = signalStarters[signal];
-  const details = signalDetails[signal];
-
-  if (!starters || !details) {
-    return;
-  }
-
-  signalCards.forEach((button) => {
-    button.classList.toggle("active", button.dataset.signal === signal);
-  });
-
-  starterSource.textContent = details.source;
-  starterTitle.textContent = details.title;
-  starterLink.href = details.url;
-  starterLink.setAttribute("aria-label", `Open ${details.title}`);
-
-  starterRows.innerHTML = "";
-  isStarterCardOpen = true;
-  stopPlaceholderRotation();
-  setActiveSuggestion(starters[0]);
-
-  starters.forEach((starter) => {
-    const row = document.createElement("button");
-    row.className = "starter-row";
-    row.type = "button";
-    row.textContent = starter;
-    row.addEventListener("mouseenter", () => {
-      setActiveSuggestion(starter);
-      setActiveStarterRow(row);
-    });
-    row.addEventListener("focus", () => {
-      setActiveSuggestion(starter);
-      setActiveStarterRow(row);
-    });
-    row.addEventListener("click", () => {
-      acceptSuggestion(starter);
-    });
-    starterRows.append(row);
-  });
-
-  setActiveStarterRow(starterRows.querySelector(".starter-row"));
-
-  starterCard.hidden = false;
-}
-
-function closeStarterCard() {
-  starterCard.hidden = true;
-  isStarterCardOpen = false;
-  signalCards.forEach((button) => {
-    button.classList.remove("active");
-  });
-  updateRotatingPlaceholder();
-}
-
-function updateComposerState() {
-  composer.classList.toggle("has-text", textarea.value.trim().length > 0);
-}
-
-function setActiveSuggestion(suggestion, options = {}) {
+function setActiveSuggestion(context, suggestion, options = {}) {
   const { animate = true } = options;
-  activeSuggestion = suggestion;
+  context.activeSuggestion = suggestion;
 
-  if (!animate || textarea.value.trim().length > 0) {
-    stopPlaceholderTyping();
-    textarea.placeholder = suggestion;
+  if (!animate || context.textarea.value.trim().length > 0) {
+    stopPlaceholderTyping(context);
+    context.textarea.placeholder = suggestion;
     return;
   }
 
-  typePlaceholder(suggestion);
+  typePlaceholder(context, suggestion);
 }
 
-function setActiveStarterRow(activeRow) {
-  starterRows.querySelectorAll(".starter-row").forEach((row) => {
-    row.classList.toggle("is-active", row === activeRow);
-  });
+function acceptSuggestion(context, suggestion) {
+  context.textarea.value = suggestion;
+  stopPlaceholderTyping(context);
+  fitTextarea(context);
+  updateComposerState(context);
+  context.textarea.focus();
+  updateRotatingPlaceholder(context);
 }
 
-function acceptSuggestion(suggestion) {
-  textarea.value = suggestion;
-  stopPlaceholderTyping();
-  fitTextarea();
-  updateComposerState();
-  textarea.focus();
-  closeStarterCard();
+function sendComposerMessage(context) {
+  sendMessage(context, context.textarea.value);
 }
 
-function getCurrentPlaceholders() {
-  return defaultPlaceholders;
-}
+function sendMessage(context, message) {
+  const trimmedMessage = message.trim();
 
-function updateRotatingPlaceholder() {
-  if (isStarterCardOpen || textarea.value.trim().length > 0) {
-    stopPlaceholderRotation();
+  if (!trimmedMessage) {
     return;
   }
 
-  const placeholders = getCurrentPlaceholders();
-  setActiveSuggestion(placeholders[placeholderIndex % placeholders.length]);
-  startPlaceholderRotation();
+  ensureChatStarted(context);
+  addChatMessage(context, trimmedMessage, "user");
+  context.textarea.value = "";
+  fitTextarea(context);
+  updateComposerState(context);
+  updateRotatingPlaceholder(context);
+
+  window.setTimeout(() => {
+    addChatMessage(context, getDelphiReply(context, trimmedMessage), "delphi");
+  }, 220);
 }
 
-function startPlaceholderRotation() {
-  stopPlaceholderRotation();
-  placeholderTimer = window.setInterval(() => {
-    if (isStarterCardOpen || textarea.value.trim().length > 0) {
-      stopPlaceholderRotation();
+function ensureChatStarted(context) {
+  if (context.chatStarted || !context.chatThread) {
+    return;
+  }
+
+  context.profile.classList.add("chat-started");
+  context.profile.classList.remove(
+    "intro-pending",
+    "intro-profile-ready",
+    "intro-typing",
+    "intro-controls-ready",
+  );
+  stopIntroTyping(context);
+  stopPlaceholderRotation(context);
+  stopPlaceholderTyping(context);
+  context.activeSuggestion = "";
+  context.textarea.placeholder = "Write a message...";
+  context.chatStarted = true;
+  updateProfileMiniJump();
+
+  const dateNode = document.createElement("div");
+  dateNode.className = "chat-date";
+  dateNode.innerHTML = `<strong>Today</strong> ${formatChatTime(new Date())}`;
+  context.chatThread.append(dateNode);
+}
+
+function addChatMessage(context, message, sender) {
+  if (!context.chatThread) {
+    return;
+  }
+
+  const row = document.createElement("div");
+  row.className = `message-row ${sender}`;
+
+  const bubble = document.createElement("div");
+  bubble.className = "message-bubble";
+  bubble.textContent = message;
+
+  row.append(bubble);
+  context.chatThread.append(row);
+  scrollMessageAboveComposer(context, row);
+  updateProfileMiniJump();
+}
+
+function updateProfileMiniJump() {
+  if (!profileMiniJump) {
+    return;
+  }
+
+  if (!activeContext?.header) {
+    profileMiniJump.classList.remove("is-visible");
+    profileMiniJump.hidden = true;
+    return;
+  }
+
+  profileMiniJump.querySelector("img").src = activeContext.image;
+  profileMiniJump.querySelector(".profile-mini-label span").textContent = activeContext.name;
+
+  const shouldShow =
+    activeContext.chatStarted &&
+    activeContext.profile.classList.contains("active") &&
+    activeContext.header.getBoundingClientRect().bottom < 24;
+
+  if (shouldShow) {
+    profileMiniJump.hidden = false;
+    window.requestAnimationFrame(() => {
+      profileMiniJump.classList.add("is-visible");
+    });
+    return;
+  }
+
+  profileMiniJump.classList.remove("is-visible");
+  window.setTimeout(() => {
+    if (!profileMiniJump.classList.contains("is-visible")) {
+      profileMiniJump.hidden = true;
+    }
+  }, 180);
+}
+
+function scrollMessageAboveComposer(context, messageRow) {
+  window.requestAnimationFrame(() => {
+    const composerRect = context.composer.getBoundingClientRect();
+    const messageRect = messageRow.getBoundingClientRect();
+    const clearance = 18;
+    const visibleBottom = context.chatStarted ? composerRect.top - clearance : window.innerHeight - clearance;
+    const overlap = messageRect.bottom - visibleBottom;
+
+    if (overlap > 0) {
+      window.scrollBy({
+        top: overlap,
+        behavior: "smooth",
+      });
       return;
     }
 
-    const placeholders = getCurrentPlaceholders();
-    placeholderIndex = (placeholderIndex + 1) % placeholders.length;
-    setActiveSuggestion(placeholders[placeholderIndex]);
+    if (messageRect.top < clearance) {
+      messageRow.scrollIntoView({
+        block: "start",
+        behavior: "smooth",
+      });
+    }
+  });
+}
+
+function formatChatTime(date) {
+  return date.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+}
+
+function getDelphiReply(context, message) {
+  const normalizedMessage = message.toLowerCase();
+
+  if (context.key === "ben") {
+    if (normalizedMessage.includes("gut")) {
+      return "I’d start with the basics: consistent meals, enough protein and fiber, lower stress around eating, and noticing which foods reliably make Maya feel better or worse.";
+    }
+
+    if (normalizedMessage.includes("hype") || normalizedMessage.includes("journalist")) {
+      return "A useful filter is whether the advice works for ordinary people without expensive gear, extreme routines, or fear-based claims. That’s where wellness coverage can become genuinely helpful.";
+    }
+
+    return "That’s a strong place to begin. I’d separate the practical behavior change from the performance-culture noise, then look at what someone could actually sustain in daily life.";
+  }
+
+  if (normalizedMessage.includes("trust")) {
+    return "Trust usually comes from making the service predictable before asking people to change behavior. I’d look at reliability, safety, pricing clarity, and whether the city can explain the tradeoffs honestly.";
+  }
+
+  if (normalizedMessage.includes("remote work")) {
+    return "Remote work changes the rhythm more than the need for mobility. The useful question is where cities now need flexible, all-day transportation instead of systems designed only around a commute peak.";
+  }
+
+  if (normalizedMessage.includes("behavior")) {
+    return "Behavior changes when the new option is meaningfully easier than the old habit. At Lyft, that meant reducing friction enough that people could trust the experience before they had to think about the platform.";
+  }
+
+  return "That’s a good starting point. I’d frame it around what changed for people, what stayed hard, and where transportation choices shape how much trust a city earns from daily life.";
+}
+
+function getCurrentPlaceholders(context) {
+  return defaultPlaceholders[context.key] || defaultPlaceholders.john;
+}
+
+function updateRotatingPlaceholder(context) {
+  if (context.chatStarted) {
+    stopPlaceholderRotation(context);
+    stopPlaceholderTyping(context);
+    context.textarea.placeholder = "Write a message...";
+    return;
+  }
+
+  if (context.textarea.value.trim().length > 0) {
+    stopPlaceholderRotation(context);
+    return;
+  }
+
+  const placeholders = getCurrentPlaceholders(context);
+  setActiveSuggestion(context, placeholders[context.placeholderIndex % placeholders.length]);
+  startPlaceholderRotation(context);
+}
+
+function startPlaceholderRotation(context) {
+  stopPlaceholderRotation(context);
+  context.placeholderTimer = window.setInterval(() => {
+    if (context.textarea.value.trim().length > 0) {
+      stopPlaceholderRotation(context);
+      return;
+    }
+
+    const placeholders = getCurrentPlaceholders(context);
+    context.placeholderIndex = (context.placeholderIndex + 1) % placeholders.length;
+    setActiveSuggestion(context, placeholders[context.placeholderIndex]);
   }, 3200);
 }
 
-function stopPlaceholderRotation() {
-  window.clearInterval(placeholderTimer);
+function stopPlaceholderRotation(context) {
+  window.clearInterval(context.placeholderTimer);
 }
 
-function typePlaceholder(suggestion) {
-  stopPlaceholderTyping();
-  textarea.placeholder = "";
+function typePlaceholder(context, suggestion) {
+  stopPlaceholderTyping(context);
+  context.textarea.placeholder = "";
 
   let index = 0;
-  placeholderTypingTimer = window.setInterval(() => {
-    if (textarea.value.trim().length > 0) {
-      stopPlaceholderTyping();
+  context.placeholderTypingTimer = window.setInterval(() => {
+    if (context.textarea.value.trim().length > 0) {
+      stopPlaceholderTyping(context);
       return;
     }
 
     index += 1;
-    textarea.placeholder = suggestion.slice(0, index);
+    context.textarea.placeholder = suggestion.slice(0, index);
 
     if (index >= suggestion.length) {
-      stopPlaceholderTyping();
+      stopPlaceholderTyping(context);
     }
   }, 18);
 }
 
-function stopPlaceholderTyping() {
-  window.clearInterval(placeholderTypingTimer);
+function stopPlaceholderTyping(context) {
+  window.clearInterval(context.placeholderTypingTimer);
+}
+
+function startEmptyChatIntro(context) {
+  if (!context.profile || !context.typedIntro || context.chatStarted || context.introAnimationStarted) {
+    return;
+  }
+
+  context.introAnimationStarted = true;
+  context.typedIntro.textContent = "";
+
+  window.setTimeout(() => {
+    if (context.chatStarted) {
+      return;
+    }
+
+    context.profile.classList.remove("intro-pending");
+    context.profile.classList.add("intro-profile-ready");
+  }, 120);
+
+  window.setTimeout(() => {
+    if (context.chatStarted) {
+      return;
+    }
+
+    context.profile.classList.add("intro-typing");
+    typeIntroText(context);
+  }, 700);
+}
+
+function typeIntroText(context) {
+  stopIntroTyping(context);
+
+  let index = 0;
+  context.introTypingTimer = window.setInterval(() => {
+    if (context.chatStarted || !context.typedIntro) {
+      stopIntroTyping(context);
+      return;
+    }
+
+    index += 1;
+    context.typedIntro.textContent = context.introFullText.slice(0, index);
+
+    if (index >= context.introFullText.length) {
+      stopIntroTyping(context);
+      window.setTimeout(() => {
+        if (!context.chatStarted) {
+          context.profile.classList.add("intro-controls-ready");
+        }
+      }, 220);
+    }
+  }, 18);
+}
+
+function stopIntroTyping(context) {
+  window.clearInterval(context.introTypingTimer);
 }
 
 function openProfileModal(profile) {
@@ -364,8 +502,22 @@ function showPage(view) {
       button.classList.toggle("view-active", isActive);
     }
   });
+
+  chatContexts.forEach((context) => {
+    stopPlaceholderRotation(context);
+    stopPlaceholderTyping(context);
+  });
+
+  activeContext = chatContexts.find((context) => context.view === view) || null;
+
+  if (activeContext && !activeContext.chatStarted) {
+    startEmptyChatIntro(activeContext);
+    updateRotatingPlaceholder(activeContext);
+  }
+
+  updateProfileMiniJump();
 }
 
-updateRotatingPlaceholder();
-showPage("profile");
-updateComposerState();
+showPage("discover");
+chatContexts.forEach(updateComposerState);
+window.addEventListener("scroll", updateProfileMiniJump, { passive: true });

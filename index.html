@@ -25,7 +25,7 @@
     <div class="sidebar-divider" aria-hidden="true"></div>
     <aside class="conversation-sidebar" aria-label="Recent conversations">
       <nav class="sidebar-actions" aria-label="Main sections">
-        <button class="sidebar-action" type="button">
+        <button class="sidebar-action" type="button" data-nav-view="discover">
           <span class="sidebar-icon plus-icon" aria-hidden="true">+</span>
           <span>New Chat</span>
         </button>
@@ -218,7 +218,179 @@
     </aside>
 
     <main class="page-shell">
-      <section class="profile-card page-view active" aria-labelledby="profile-title" data-page-view="profile">
+      <button class="profile-mini-jump" type="button" data-profile-jump hidden>
+        <img src="assets/johnzimmer-profile.png" alt="" />
+        <span class="profile-mini-label">
+          <span>John Zimmer</span>
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+            <path d="m19 9-4 4" />
+            <path d="m15 9 4 4" />
+          </svg>
+        </span>
+      </button>
+
+      <section class="discover-view page-view" aria-labelledby="discover-title" data-page-view="discover">
+        <div class="discover-header">
+          <div>
+            <h1 id="discover-title">Discover</h1>
+            <p>Talk to trusted minds with real experience</p>
+          </div>
+          <label class="discover-search">
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-3.5-3.5" />
+            </svg>
+            <input type="search" placeholder="Search minds..." aria-label="Search minds" />
+          </label>
+        </div>
+
+        <div class="discover-filters" aria-label="Categories">
+          <button class="active" type="button">All</button>
+          <button type="button">Entrepreneurship</button>
+          <button type="button">Health &amp; Fitness</button>
+          <button type="button">Mind &amp; Behavior</button>
+          <button type="button">Technology</button>
+          <button type="button">Life &amp; Relationships</button>
+          <button type="button">The Library of Minds</button>
+          <button type="button">Career</button>
+        </div>
+
+        <div class="discover-carousel" aria-label="Featured minds">
+          <button class="discover-card" type="button" data-nav-view="profile">
+            <img src="assets/johnzimmer-profile.png" alt="John Zimmer" />
+            <span class="discover-card-shade" aria-hidden="true"></span>
+            <span class="discover-card-copy">
+              <strong>John Zimmer</strong>
+              <small>Co-founder, Lyft · Working on Yes&amp;</small>
+            </span>
+          </button>
+          <button class="discover-card" type="button">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=520&q=80" alt="Vanessa Van Edwards" />
+            <span class="discover-card-shade" aria-hidden="true"></span>
+            <span class="discover-card-copy">
+              <strong>Vanessa Van Edwards</strong>
+              <small>Behavioral researcher, founder, speaker</small>
+            </span>
+          </button>
+          <button class="discover-card" type="button">
+            <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=520&q=80" alt="Zack Kass" />
+            <span class="discover-card-shade" aria-hidden="true"></span>
+            <span class="discover-card-copy">
+              <strong>Zack Kass</strong>
+              <small>AI advisor · Former OpenAI strategist</small>
+            </span>
+          </button>
+          <button class="discover-card" type="button">
+            <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?auto=format&fit=crop&w=520&q=80" alt="Dr. Céline Gounder" />
+            <span class="discover-card-shade" aria-hidden="true"></span>
+            <span class="discover-card-copy">
+              <strong>Dr. Céline Gounder</strong>
+              <small>Infectious disease expert</small>
+            </span>
+          </button>
+          <button class="discover-card" type="button">
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=520&q=80" alt="Dr. Mark Hyman" />
+            <span class="discover-card-shade" aria-hidden="true"></span>
+            <span class="discover-card-copy">
+              <strong>Dr. Mark Hyman</strong>
+              <small>Functional medicine and wellness</small>
+            </span>
+          </button>
+        </div>
+
+        <div class="discover-list" aria-label="Popular minds">
+          <div class="discover-ranked">
+            <button class="ranked-mind" type="button">
+              <span class="ranked-avatar">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="" />
+                <span>1</span>
+              </span>
+              <span class="ranked-copy">
+                <strong>Brian Halligan <em>26.2K Mind</em></strong>
+                <small>Co-founder of HubSpot</small>
+              </span>
+            </button>
+            <button class="ranked-mind" type="button">
+              <span class="ranked-avatar">
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=120&q=80" alt="" />
+                <span>2</span>
+              </span>
+              <span class="ranked-copy">
+                <strong>Vanessa Van Edwards <em>52.7K Mind</em></strong>
+                <small>Behavioral Researcher, Founder, Author</small>
+              </span>
+            </button>
+            <button class="ranked-mind" type="button">
+              <span class="ranked-avatar">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="" />
+                <span>3</span>
+              </span>
+              <span class="ranked-copy">
+                <strong>Dr. Céline Gounder <em>131.7K Mind</em></strong>
+                <small>Infectious Disease Expert</small>
+              </span>
+            </button>
+            <button class="ranked-mind" type="button">
+              <span class="ranked-avatar">
+                <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?auto=format&fit=crop&w=120&q=80" alt="" />
+                <span>4</span>
+              </span>
+              <span class="ranked-copy">
+                <strong>Zack Kass <em>18.9K Mind</em></strong>
+                <small>AI Advisor | Former OpenAI</small>
+              </span>
+            </button>
+            <button class="ranked-mind" type="button">
+              <span class="ranked-avatar">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="" />
+                <span>5</span>
+              </span>
+              <span class="ranked-copy">
+                <strong>Guy Kawasaki <em>58.3K Mind</em></strong>
+                <small>Chief Evangelist, Canva</small>
+              </span>
+            </button>
+            <button class="ranked-mind" type="button">
+              <span class="ranked-avatar">
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=120&q=80" alt="" />
+                <span>6</span>
+              </span>
+              <span class="ranked-copy">
+                <strong>Dr. Ellen Langer <em>13.6K Mind</em></strong>
+                <small>Professor of Psychology, Harvard</small>
+              </span>
+            </button>
+          </div>
+
+          <div class="discover-prompts" aria-label="Suggested questions">
+            <button type="button">What are the best practices for a startup founder to evolve into a scale-up CEO?</button>
+            <button type="button">How can I make a great first impression?</button>
+            <button type="button">What worries you more? The Ebola outbreak or the hantavirus outbreak?</button>
+            <button type="button">How do we restore humanity?</button>
+            <button type="button">What’s the single biggest lesson you teach founders about growth?</button>
+            <button type="button">What’s one simple way to cultivate mindfulness today by noticing novelty in your everyday experiences?</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-card page-view active intro-sequence intro-pending" aria-labelledby="profile-title" data-page-view="profile" data-chat-profile data-profile-key="john" data-profile-name="John Zimmer" data-profile-image="assets/johnzimmer-profile.png">
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="profile-shadow" aria-hidden="true"></div>
 
@@ -238,7 +410,12 @@
         <div class="title-block">
           <h1 id="profile-title">John Zimmer</h1>
           <div class="headline-row">
-            <p>Co-founder, Lyft · Working on Yes&amp;</p>
+            <p>
+              Co-founder, Lyft · Working on Yes&amp; ·
+              <button class="byline-info-link" type="button" data-profile-modal="john">
+                More info
+              </button>
+            </p>
           </div>
           <div class="profile-meta">
             <span>10.3K Mind</span>
@@ -259,78 +436,23 @@
               />
               <strong>Maya,</strong>
             </span>
-            I’m John. I helped build Lyft into one of the defining transportation
-            platforms of the last decade, and now at Yes&amp; I’m building mission-led
-            companies; for your story on how cities are changing after remote work,
-            I can help think through transportation, public trust, and what actually
-            changes behavior.
+            <span data-typed-intro>I’m John. It looks like you’re working on a story about how cities are changing after remote work. I can help think through transportation, public trust, and what actually changes commuter behavior.</span>
           </p>
         </div>
 
-        <div class="signal-starters" aria-label="Recent starting points">
-          <div class="signal-cards">
-            <button class="signal-card" type="button" data-signal="podcast">
-              <span class="signal-icon signal-art" aria-hidden="true">
-                <img src="assets/LibraryOfMinds.png" alt="" />
-              </span>
-              <span>
-                <small>Podcast</small>
-                <strong>Library of Minds conversation</strong>
-              </span>
-            </button>
-            <button class="signal-card" type="button" data-signal="substack">
-              <span class="signal-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M6 3h12v18l-6-3-6 3Z" />
-                  <path d="M9 8h6" />
-                  <path d="M9 12h6" />
-                </svg>
-              </span>
-              <span>
-                <small>Substack</small>
-                <strong>Building mission-led companies</strong>
-              </span>
-            </button>
-            <button class="signal-card" type="button" data-signal="forbes">
-              <span class="signal-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24">
-                  <path d="M4 5h16v14H4Z" />
-                  <path d="M8 9h8" />
-                  <path d="M8 13h5" />
-                </svg>
-              </span>
-              <span>
-                <small>Forbes</small>
-                <strong>Recent profile on John</strong>
-              </span>
-            </button>
-          </div>
-
-          <div class="starter-card" data-starter-card hidden>
-            <div class="starter-card-header">
-              <div class="starter-card-title">
-                <small data-starter-source>Podcast</small>
-                <strong data-starter-title>Library of Minds conversation</strong>
-              </div>
-              <a class="starter-link" href="#" target="_blank" rel="noreferrer" data-starter-link>
-                <span>Open</span>
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M7 17 17 7" />
-                  <path d="M9 7h8v8" />
-                </svg>
-              </a>
-            </div>
-            <div class="starter-rows" data-starter-rows></div>
-          </div>
+        <div class="question-suggestions" aria-label="Suggested questions">
+          <button class="question-suggestion" type="button">
+            How are remote work patterns changing what cities need from transportation?
+          </button>
+          <button class="question-suggestion" type="button">
+            What makes people trust a new way of getting around a city?
+          </button>
+          <button class="question-suggestion" type="button">
+            What actually changes commuter behavior at scale?
+          </button>
         </div>
+
+        <div class="chat-thread" data-chat-thread aria-live="polite"></div>
 
         <div class="inline-composer" aria-label="Message John">
           <textarea
@@ -368,14 +490,10 @@
               </button>
             </div>
           </div>
-          <p class="fine-print">
-            By using this service, you agree to the <a href="#">Terms of Service</a>
-            and <a href="#">Privacy Policy</a>.
-          </p>
         </div>
       </section>
 
-      <section class="profile-card page-view" aria-labelledby="ben-profile-title" data-page-view="ben-profile">
+      <section class="profile-card page-view intro-sequence intro-pending" aria-labelledby="ben-profile-title" data-page-view="ben-profile" data-chat-profile data-profile-key="ben" data-profile-name="Ben Greenfield" data-profile-image="assets/BenGreen.jpg">
         <div class="profile-glow" aria-hidden="true"></div>
         <div class="profile-shadow" aria-hidden="true"></div>
 
@@ -395,7 +513,12 @@
         <div class="title-block">
           <h1 id="ben-profile-title">Ben Greenfield</h1>
           <div class="headline-row">
-            <p>Founder, Ben Greenfield Life</p>
+            <p>
+              Founder, Ben Greenfield Life ·
+              <button class="byline-info-link" type="button" data-profile-modal="ben">
+                More info
+              </button>
+            </p>
           </div>
           <div class="profile-meta">
             <span>96K Mind</span>
@@ -416,14 +539,25 @@
               />
               <strong>Maya,</strong>
             </span>
-            I’m Ben. I’ve spent years writing, speaking, and coaching around
-            fitness, nutrition, gut health, recovery, and performance; if you’re
-            working on a story about how wellness advice becomes useful instead of
-            overwhelming, I can help sort signal from noise.
+            <span data-typed-intro>I’m Ben. I’ve spent years writing, speaking, and coaching around fitness, nutrition, gut health, recovery, and performance; if you’re working on a story about how wellness advice becomes useful instead of overwhelming, I can help sort signal from noise.</span>
           </p>
         </div>
 
-        <div class="inline-composer static-composer" aria-label="Message Ben">
+        <div class="question-suggestions" aria-label="Suggested questions">
+          <button class="question-suggestion" type="button">
+            How can wellness advice become practical instead of overwhelming?
+          </button>
+          <button class="question-suggestion" type="button">
+            What are the simplest signals that gut health is improving?
+          </button>
+          <button class="question-suggestion" type="button">
+            How should journalists cover performance trends without hype?
+          </button>
+        </div>
+
+        <div class="chat-thread" data-chat-thread aria-live="polite"></div>
+
+        <div class="inline-composer" aria-label="Message Ben">
           <textarea aria-label="Message Ben" rows="2" placeholder="Could you share some tips to unlock better gut health?"></textarea>
           <span class="tab-hint" aria-hidden="true">TAB</span>
           <div class="composer-actions">
@@ -438,12 +572,22 @@
                 <img src="assets/icons/call.svg" alt="" aria-hidden="true" />
                 <span>Call</span>
               </button>
+              <button class="send-button" type="button" aria-label="Send message">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 19V5" />
+                  <path d="m5 12 7-7 7 7" />
+                </svg>
+              </button>
             </div>
           </div>
-          <p class="fine-print">
-            By using this service, you agree to the <a href="#">Terms of Service</a>
-            and <a href="#">Privacy Policy</a>.
-          </p>
         </div>
       </section>
 
@@ -510,10 +654,6 @@
               </button>
             </div>
           </div>
-          <p class="fine-print">
-            By using this service, you agree to the <a href="#">Terms of Service</a>
-            and <a href="#">Privacy Policy</a>.
-          </p>
         </div>
       </section>
 
