@@ -1150,8 +1150,6 @@ h1 {
 .intro-sequence:not(.chat-started) .profile-image-wrap,
 .intro-sequence:not(.chat-started) .title-block,
 .intro-sequence:not(.chat-started) .starter-panel,
-.intro-sequence:not(.chat-started) .bio,
-.intro-sequence:not(.chat-started) .question-suggestions,
 .intro-sequence:not(.chat-started) > .inline-composer {
   transition: opacity 460ms ease, transform 460ms ease;
 }
@@ -1162,9 +1160,7 @@ h1 {
   transform: translateY(10px);
 }
 
-.intro-pending:not(.chat-started) .bio,
 .intro-pending:not(.chat-started) .starter-panel,
-.intro-pending:not(.chat-started) .question-suggestions,
 .intro-pending:not(.chat-started) > .inline-composer {
   opacity: 0;
   pointer-events: none;
@@ -1183,20 +1179,24 @@ h1 {
   transform: translateY(10px);
 }
 
-.intro-typing:not(.chat-started) .starter-panel,
-.intro-typing:not(.chat-started) .bio {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.intro-sequence:not(.chat-started):not(.intro-controls-ready) .question-suggestions,
-.intro-sequence:not(.chat-started):not(.intro-controls-ready) > .inline-composer {
+.intro-profile-ready:not(.chat-started) > .inline-composer {
   opacity: 0;
   pointer-events: none;
   transform: translateY(10px);
 }
 
-.intro-controls-ready:not(.chat-started) .question-suggestions,
+.intro-card-ready:not(.chat-started) .starter-panel {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.intro-card-ready:not(.chat-started) > .inline-composer {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+}
+
 .intro-controls-ready:not(.chat-started) .starter-panel,
 .intro-controls-ready:not(.chat-started) > .inline-composer {
   opacity: 1;

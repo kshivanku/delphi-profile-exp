@@ -24,6 +24,7 @@ const profileModalKicker = document.querySelector("[data-modal-kicker]");
 const profileModalBody = document.querySelector("[data-modal-body]");
 const profileModalFollowTitle = document.querySelector("[data-modal-follow-title]");
 const profileModalCloseButtons = document.querySelectorAll(".modal-close, .modal-backdrop");
+const guestSpotifyMarkup = guestSpotify?.innerHTML || "";
 
 const profileDescriptions = {
   john: {
@@ -72,7 +73,7 @@ const chatContexts = Array.from(document.querySelectorAll("[data-chat-profile]")
     introFullText: typedIntro?.textContent || "",
     authIntroFullText: typedIntro?.textContent || "",
     guestIntroFullText: guestTypedIntro?.textContent || "",
-    introTypingTimer: null,
+    introStageTimers: [],
     chatStarted: profile.classList.contains("chat-started") || hasConversationHistory,
     introAnimationStarted: profile.classList.contains("chat-started") || hasConversationHistory,
   };
@@ -155,6 +156,7 @@ function setAccountState(nextIsLoggedIn) {
     }
     if (guestSpotify) {
       guestSpotify.hidden = true;
+      stopGuestSpotify();
     }
     authProfileCopy.forEach((node) => {
       node.hidden = false;
@@ -195,6 +197,7 @@ function setAccountState(nextIsLoggedIn) {
     contextEmpty.hidden = false;
   }
   if (guestSpotify) {
+    restoreGuestSpotify();
     guestSpotify.hidden = false;
   }
   authProfileCopy.forEach((node) => {
@@ -307,10 +310,13 @@ function ensureChatStarted(context) {
   context.profile.classList.remove(
     "intro-pending",
     "intro-profile-ready",
-    "intro-typing",
+    "intro-card-ready",
     "intro-controls-ready",
   );
-  stopIntroTyping(context);
+  clearIntroStageTimers(context);
+  if (context.key === "john") {
+    stopGuestSpotify();
+  }
   context.textarea.placeholder = "Write a message...";
   context.chatStarted = true;
   updateProfileMiniJump();
@@ -464,30 +470,40 @@ function getDelphiReply(context, message) {
 function startEmptyChatIntro(context) {
   syncActiveIntroCopy(context);
 
-  if (!context.profile || !context.typedIntro || context.chatStarted || context.introAnimationStarted) {
+  if (!context.profile || context.chatStarted || context.introAnimationStarted) {
     return;
   }
 
   context.introAnimationStarted = true;
-  context.typedIntro.textContent = "";
+  if (context.typedIntro) {
+    context.typedIntro.textContent = context.introFullText;
+  }
+  clearIntroStageTimers(context);
 
-  window.setTimeout(() => {
+  context.introStageTimers.push(window.setTimeout(() => {
     if (context.chatStarted) {
       return;
     }
 
     context.profile.classList.remove("intro-pending");
     context.profile.classList.add("intro-profile-ready");
-  }, 120);
+  }, 120));
 
-  window.setTimeout(() => {
+  context.introStageTimers.push(window.setTimeout(() => {
     if (context.chatStarted) {
       return;
     }
 
-    context.profile.classList.add("intro-typing");
-    typeIntroText(context);
-  }, 700);
+    context.profile.classList.add("intro-card-ready");
+  }, 620));
+
+  context.introStageTimers.push(window.setTimeout(() => {
+    if (context.chatStarted) {
+      return;
+    }
+
+    context.profile.classList.add("intro-controls-ready");
+  }, 940));
 }
 
 function syncActiveIntroCopy(context) {
@@ -503,14 +519,14 @@ function resetAvailableIntroAnimations() {
       return;
     }
 
-    stopIntroTyping(context);
+    clearIntroStageTimers(context);
     if (context.authTypedIntro) {
       context.authTypedIntro.textContent = context.authIntroFullText;
     }
     if (context.guestTypedIntro) {
       context.guestTypedIntro.textContent = context.guestIntroFullText;
     }
-    context.profile.classList.remove("intro-profile-ready", "intro-typing", "intro-controls-ready");
+    context.profile.classList.remove("intro-profile-ready", "intro-card-ready", "intro-controls-ready");
     context.profile.classList.add("intro-pending");
     context.introAnimationStarted = false;
   });
@@ -520,32 +536,25 @@ function resetAvailableIntroAnimations() {
   }
 }
 
-function typeIntroText(context) {
-  stopIntroTyping(context);
+function stopGuestSpotify() {
+  if (!guestSpotify) {
+    return;
+  }
 
-  let index = 0;
-  context.introTypingTimer = window.setInterval(() => {
-    if (context.chatStarted || !context.typedIntro) {
-      stopIntroTyping(context);
-      return;
-    }
-
-    index += 1;
-    context.typedIntro.textContent = context.introFullText.slice(0, index);
-
-    if (index >= context.introFullText.length) {
-      stopIntroTyping(context);
-      window.setTimeout(() => {
-        if (!context.chatStarted) {
-          context.profile.classList.add("intro-controls-ready");
-        }
-      }, 220);
-    }
-  }, 18);
+  guestSpotify.innerHTML = "";
 }
 
-function stopIntroTyping(context) {
-  window.clearInterval(context.introTypingTimer);
+function restoreGuestSpotify() {
+  if (!guestSpotify || guestSpotify.innerHTML.trim()) {
+    return;
+  }
+
+  guestSpotify.innerHTML = guestSpotifyMarkup;
+}
+
+function clearIntroStageTimers(context) {
+  context.introStageTimers?.forEach((timer) => window.clearTimeout(timer));
+  context.introStageTimers = [];
 }
 
 function openProfileModal(profile) {
