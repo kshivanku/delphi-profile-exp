@@ -870,37 +870,6 @@ a {
   padding-bottom: 220px;
 }
 
-.profile-share {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 4;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  height: 34px;
-  padding: 0 13px;
-  border: 1px solid rgba(31, 29, 26, 0.1);
-  border-radius: 999px;
-  color: #5f5a54;
-  background: rgba(248, 247, 245, 0.88);
-  font-size: 14px;
-  font-weight: 400;
-  cursor: pointer;
-  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
-}
-
-.profile-share:hover {
-  color: #242321;
-  border-color: rgba(31, 29, 26, 0.16);
-  background: #f1efec;
-}
-
-.profile-share svg {
-  width: 16px;
-  height: 16px;
-}
-
 .profile-mini-jump {
   position: fixed;
   top: 22px;
@@ -2163,16 +2132,6 @@ textarea::placeholder {
     z-index: 2;
     margin-top: auto;
     padding-bottom: max(14px, env(safe-area-inset-bottom));
-  }
-
-  .profile-share {
-    position: absolute;
-    top: 12px;
-    right: 0;
-    z-index: 5;
-    height: 32px;
-    padding: 0 11px;
-    font-size: 13px;
   }
 
   .about-header h1 {
